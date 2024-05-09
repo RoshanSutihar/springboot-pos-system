@@ -4,7 +4,7 @@ public class Supplier {
 	private int supplierId;
 	private String supplierName;
 	private String supplierContact;
-	private int supplierAddress;
+	private String supplierAddress;
 	private String supplierEmail;
 	
 	Supplier(){}
@@ -27,12 +27,15 @@ public class Supplier {
 	public void setSupplierContact(String supplierContact) {
 		this.supplierContact = supplierContact;
 	}
-	public int getSupplierAddress() {
+	
+	public String getSupplierAddress() {
 		return supplierAddress;
 	}
-	public void setSupplierAddress(int supplierAddress) {
+
+	public void setSupplierAddress(String supplierAddress) {
 		this.supplierAddress = supplierAddress;
 	}
+
 	public String getSupplierEmail() {
 		return supplierEmail;
 	}
