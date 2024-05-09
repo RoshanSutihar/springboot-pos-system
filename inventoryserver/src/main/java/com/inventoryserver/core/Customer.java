@@ -4,7 +4,7 @@ public class Customer {
 
 	private int customerID;
 	private String customerName;
-	private String customerContact;
+	
 	private String customerAdd;
 	private String customerPhone;
 	private String customerEmail;
@@ -25,12 +25,7 @@ public class Customer {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public String getCustomerContact() {
-		return customerContact;
-	}
-	public void setCustomerContact(String customerContact) {
-		this.customerContact = customerContact;
-	}
+	
 	public String getCustomerAdd() {
 		return customerAdd;
 	}
