@@ -5,6 +5,14 @@ public class Product {
 	private int productId;
 	private String productName;
 	private String productDesc;
+	private double productPrice;
+	public double getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(double productPrice) {
+		this.productPrice = productPrice;
+	}
 	private int productQty;
 	private int supplierId;
 	private int categoryId;
