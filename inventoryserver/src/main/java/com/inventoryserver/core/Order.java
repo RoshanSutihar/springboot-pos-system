@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Order {
     private int orderID;
-    private Date orderDate;
-    private int customerID;
-    private Date shipDate;
+    private String orderDate;
+    private String customerID;
+    private String shipDate;
     private double totalAmount;
     private List<OrderDetail> orderDetails;
 
  
-    public Order(int orderID, Date orderDate, int customerID, Date shipDate, double totalAmount, List<OrderDetail> orderDetails) {
+    public Order(int orderID, String orderDate, String customerID, String shipDate, double totalAmount, List<OrderDetail> orderDetails) {
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.customerID = customerID;
@@ -21,6 +21,7 @@ public class Order {
         this.orderDetails = orderDetails;
     }
 
+    Order(){}
  
     public int getOrderID() {
         return orderID;
@@ -30,31 +31,40 @@ public class Order {
         this.orderID = orderID;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
+ 
+  
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
+   
 
-    public int getCustomerID() {
-        return customerID;
-    }
+    public String getCustomerID() {
+		return customerID;
+	}
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
+	public void setCustomerID(String customerID) {
+		this.customerID = customerID;
+	}
 
-    public Date getShipDate() {
-        return shipDate;
-    }
+	public String getOrderDate() {
+		return orderDate;
+	}
 
-    public void setShipDate(Date shipDate) {
-        this.shipDate = shipDate;
-    }
 
-    public double getTotalAmount() {
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+
+
+	public String getShipDate() {
+		return shipDate;
+	}
+
+
+	public void setShipDate(String shipDate) {
+		this.shipDate = shipDate;
+	}
+
+
+	public double getTotalAmount() {
         return totalAmount;
     }
 

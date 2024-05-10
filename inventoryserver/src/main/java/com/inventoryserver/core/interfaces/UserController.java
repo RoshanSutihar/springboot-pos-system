@@ -48,11 +48,11 @@ public class UserController {
 	
 	@PostMapping("/login")
     public ResponseEntity<String> checkLogin(@RequestBody User user) {
-        User result = userDao.findByNameAndPassword(user.getUserName(), user.getUserPassword());
+        String result = userDao.findUserNameByNameAndPassword(user.getUserName(), user.getUserPassword());
         if (result == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("failure");
         }
-        return ResponseEntity.ok().body("success");
+        return ResponseEntity.ok().body(result);
     }
 	
 	

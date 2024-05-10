@@ -16,8 +16,8 @@ public class ProductRowMapper implements RowMapper<Product>{
 		  u.setProductId(row.getInt("product_id"));
 		  u.setProductDesc(row.getString("product_desc"));
 		  u.setProductQty(row.getInt("product_qty"));
-		  u.setSupplierId(row.getInt("product_supplier"));
-		  u.setCategoryId(row.getInt("product_cat"));
+		  u.setSupplierId(row.getString("product_supp"));
+		  u.setCategoryId(row.getString("product_cat"));
 		  u.setProductPrice(row.getDouble("product_price"));
 		  
 		  

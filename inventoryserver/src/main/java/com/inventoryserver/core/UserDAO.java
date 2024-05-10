@@ -56,22 +56,33 @@ public class UserDAO {
 	
 	
 	
-	 public User findByNameAndPassword(String name,String password) {
-	    	String sql = "SELECT * FROM users WHERE user_name=?";
-	        RowMapper<User> rowMapper = new UserRowMapper();
-	        User result = null;
-	        try {
-	            result = jdbcTemplate.queryForObject(sql, rowMapper, name);
-	        } catch(Exception ex) {
-	            
-	        }
-	        if(result != null && passwordService.verifyHash(password, result.getUserPassword())) {
-	        	result.setUserPassword("Undisclosed");
-	        } else {
-	        	result = null;
-	        }
-	        return result;	
+	public String findUserNameByNameAndPassword(String name, String password) {
+	    String sql = "SELECT user_name, user_password FROM users WHERE user_name=?";
+	    RowMapper<User> rowMapper = (rs, rowNum) -> {
+	        User user = new User();
+	        user.setUserName(rs.getString("user_name"));
+	        user.setUserPassword(rs.getString("user_password"));
+	        return user;
+	    };
+
+	    User result = null;
+	    try {
+	        result = jdbcTemplate.queryForObject(sql, rowMapper, name);
+	    } catch (Exception ex) {
+	        // Handle case when no user is found
+	        return null;
 	    }
+
+	    if (result != null && passwordService.verifyHash(password, result.getUserPassword())) {
+	        return result.getUserName(); // Return user name upon successful login
+	    } else {
+	        return null; // Return null if login is unsuccessful
+	    }
+	}
+	
+	
+	
+	
 	
 // atend the resturant
 	public String attendRestaurant(String userName, String resName) {

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center text-primary">Inventory MAnagement Software</h1>
+        <hr>
+      </div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Login
+        </div>
+        <div class="card-body">
+          <form id="login-form">
+            <div class="form-group">
+              <label for="email">Email username</label>
+              <input type="text" class="form-control" id="username" placeholder="Enter Username" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <div id="error-msg" class="mt-3 text-danger"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function(){
+        // Function to perform login
+        $('#login-form').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+    
+            // Get username and password from input fields
+            var username = $('#username').val();
+            var password = $('#password').val();
+    
+            // Create a data object with username and password
+            var data = {
+                "userName": username,
+                "userPassword": password
+            };
+    
+            // Make a POST request to the login API endpoint
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8085/users/login',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    if (response === "failure") {
+                        $('#error-msg').text("Invalid username or password.");
+                    } else {
+                        sessionStorage.setItem('username', response);
+                        window.location.href = 'dashboard.html';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status === 401) {
+                        $('#error-msg').text("Invalid username or password.");
+                    } else {
+                        $('#error-msg').text("An unexpected error occurred.");
+                    }
+                }
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>

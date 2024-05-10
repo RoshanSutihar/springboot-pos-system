@@ -39,5 +39,12 @@ public class SupplierDAO {
 		    jdbcTemplate.update(insertSQL,newsupplier.getSupplierName(), newsupplier.getSupplierContact(), newsupplier.getSupplierAddress(), newsupplier.getSupplierEmail() );
 		    return "Success";
 		}
+	 
+	 public int getTotalSuppliersCount() {
+		 
+		 String sql = "SELECT COUNT(*) AS total_suppliers FROM suppliers";
+	        return jdbcTemplate.queryForObject(sql, Integer.class);
+		 
+	 }
 
 }

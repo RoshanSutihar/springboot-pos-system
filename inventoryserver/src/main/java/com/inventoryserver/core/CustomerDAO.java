@@ -2,11 +2,15 @@ package com.inventoryserver.core;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import com.inventoryserver.core.dtos.CustomerDTO;
 
 @Repository
 public class CustomerDAO {
@@ -39,5 +43,31 @@ public class CustomerDAO {
 		    jdbcTemplate.update(insertSQL,newcustomer.getCustomerName(), newcustomer.getCustomerPhone(), newcustomer.getCustomerAdd(), newcustomer.getCustomerEmail() );
 		    return "Success";
 		}
+	 
+	 public int getTotalCustomerCount()
+	 {
+		 String sql = "SELECT COUNT(*) AS total_customers FROM cutomers";
+	        return jdbcTemplate.queryForObject(sql, Integer.class);
+	 }
+	 
+	 
+	 public List<CustomerDTO> getAllCustomers() {
+		 String query = "SELECT * FROM cutomers";
+	        List<Customer> customers = jdbcTemplate.query(query, new CustomerRowMapper());
 
+	        // Convert Customer objects to CustomerDTO objects
+	        return customers.stream()
+	                .map(this::convertToDto)
+	                .collect(Collectors.toList());
+	    }
+	 
+	 
+	 private CustomerDTO convertToDto(Customer customer) {
+	        CustomerDTO dto = new CustomerDTO();
+	        // Set DTO properties based on Customer properties
+	        
+	        dto.setCustomerName(customer.getCustomerName());
+	        // Set other properties as needed
+	        return dto;
+	    }
 }

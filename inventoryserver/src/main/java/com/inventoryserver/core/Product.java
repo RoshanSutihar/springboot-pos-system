@@ -14,8 +14,8 @@ public class Product {
 		this.productPrice = productPrice;
 	}
 	private int productQty;
-	private int supplierId;
-	private int categoryId;
+	private String supplierId;
+	private String categoryId;
 	
 	
 	Product(){}
@@ -44,18 +44,23 @@ public class Product {
 	public void setProductQty(int productQty) {
 		this.productQty = productQty;
 	}
-	public int getSupplierId() {
+
+	public String getSupplierId() {
 		return supplierId;
 	}
-	public void setSupplierId(int supplierId) {
+
+	public void setSupplierId(String supplierId) {
 		this.supplierId = supplierId;
 	}
-	public int getCategoryId() {
+
+	public String getCategoryId() {
 		return categoryId;
 	}
-	public void setCategoryId(int categoryId) {
+
+	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
 	}
+
 	
 
 }
