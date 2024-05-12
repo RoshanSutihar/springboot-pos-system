@@ -8,6 +8,8 @@
   <title>Dashboard</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
   <style>
     .card-title {
       font-size: 1.2rem; /* smaller font size for card title */
@@ -21,15 +23,15 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+     
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Dashboard<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="dashboard.html">Dashboard<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,6 +40,7 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
                 <a class="dropdown-item" href="#">Add Order</a>
                 <a class="dropdown-item" href="#">View Order</a>
+                <a class="dropdown-item" href="fetechorder.html">Search Order</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -68,7 +71,7 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Register User</a>
+              <a class="nav-link" href="register-user.html">Register User</a>
             </li>
           </ul>
         </div>
@@ -76,7 +79,7 @@
       
 
 
-      <div class="container mt-5">
+      <div class="container" style="margin-top: 15%;">
         <div class="row justify-content-center align-items-center"> <!-- Center horizontally and vertically -->
           <div class="col-md-3">
             <div class="card text-center bg-info text-white">
@@ -120,7 +123,7 @@
               type: 'GET',
               url: 'http://localhost:8085/customers/count',
               success: function(response) {
-                  $('#totalCustomers').text(response +" customer(s)");
+                  $('#totalCustomers').text(response );
               },
               error: function(xhr, status, error) {
                   console.error('Error fetching total customers:', error);
@@ -132,7 +135,7 @@
               type: 'GET',
               url: 'http://localhost:8085/suppliers/count',
               success: function(response) {
-                  $('#totalSuppliers').text(response+ " supplier(s)");
+                  $('#totalSuppliers').text(response);
               },
               error: function(xhr, status, error) {
                   console.error('Error fetching total suppliers:', error);
@@ -144,7 +147,7 @@
               type: 'GET',
               url: 'http://localhost:8085/products/count',
               success: function(response) {
-                  $('#totalInventory').text(response +" items");
+                  $('#totalInventory').text(response );
               },
               error: function(xhr, status, error) {
                   console.error('Error fetching total inventory:', error);
@@ -168,6 +171,7 @@
 
 
 <script>
+    
     function checkLoggedIn() {
        
         var username = sessionStorage.getItem('username');

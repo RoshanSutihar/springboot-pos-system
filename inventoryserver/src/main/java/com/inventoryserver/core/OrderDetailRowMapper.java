@@ -16,6 +16,7 @@ public class OrderDetailRowMapper implements RowMapper<OrderDetail>{
 		u.setOrderId(row.getInt("order_id"));
 		u.setProductId(row.getString("product_name"));
 		u.setProductQty(row.getInt("product_qty"));
+		u.setUnitPrice(row.getInt("product_unitprice"));
 		u.setProductTotal(row.getDouble("product_total"));
 		
 		

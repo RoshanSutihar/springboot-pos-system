@@ -48,7 +48,7 @@ public String save(Order newOrder) {
 
         return "Success";
     } catch(Exception ex) {
-        // Rollback the transaction if an exception occurs
+        
         jdbcTemplate.execute("ROLLBACK");
         ex.printStackTrace();
         return "Error";
