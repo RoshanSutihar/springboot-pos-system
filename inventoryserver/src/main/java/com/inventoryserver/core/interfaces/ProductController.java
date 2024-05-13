@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,11 @@ public class ProductController {
         return proDao.getAllProducts();
     }
 	
+	@GetMapping("/getlowproducts")
+    public List<Product> getLowProducts() {
+        return proDao.getLowProducts();
+    }
+	
 	@PostMapping("/addcategory")
 	public ResponseEntity<String> createCategory(@RequestBody  Category newcategory) {
 		
@@ -90,4 +96,20 @@ public class ProductController {
         return proDao.getTotalproductCount();
     }
 	
+	@PostMapping("/{proid}/restock/{qty}")
+    public ResponseEntity<String> restockItem(@PathVariable("proid") int productId, @PathVariable("qty") int quantity) {
+        if (productId == 0 || quantity <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid productId or quantity");
+        }
+        
+        String key = proDao.restock(productId, quantity);
+        if (key.equals("qtyerror")) {
+        	
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This product cant be restocked");
+        } else if (key.equals("Error")) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong");
+        }
+
+        return ResponseEntity.ok().body("Item restocked successfully");
+    }
 }

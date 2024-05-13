@@ -3,6 +3,7 @@ package com.inventoryserver.core;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -45,6 +46,13 @@ public class ProductDAO {
 	        return jdbcTemplate.query(sql, rowMapper);
 	 }
 	 
+	 public List<Product> getLowProducts() {
+			
+		 String sql = "SELECT * FROM products where product_qty < 20";
+	        RowMapper<Product> rowMapper = new ProductRowMapper();
+	        return jdbcTemplate.query(sql, rowMapper);
+	 }
+	 
 	 
 	 public int getTotalproductCount()
 	 {
@@ -53,5 +61,30 @@ public class ProductDAO {
 	        return totalQuantity != null ? totalQuantity : 0;
 	 }
 	 
+	 public String restock(int proID, int qty) {
+		    try {
+		        
+		        String checkSql = "SELECT product_qty FROM products WHERE product_id = ?";
+		        int currentQty = jdbcTemplate.queryForObject(checkSql, Integer.class, proID);
+		        if (currentQty >= 20) {
+		            return "qtyerror"; 
+		        }
+
+		        
+		        String restockSql = "UPDATE products SET product_qty = product_qty + ? WHERE product_id = ?";
+		        int rowsAffected = jdbcTemplate.update(restockSql, qty, proID);
+		        
+		        if (rowsAffected > 0) {
+		            return "success";
+		        } else {
+		            return "error"; 
+		        }
+		    } catch (DataAccessException e) {
+		        e.printStackTrace();
+		        return "error"; 
+		    }
+		}
+
+
 	
 }
