@@ -106,8 +106,10 @@ public class ProductController {
         if (key.equals("qtyerror")) {
         	
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This product cant be restocked");
+            
         } else if (key.equals("Error")) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong");
+            
         }
 
         return ResponseEntity.ok().body("Item restocked successfully");
