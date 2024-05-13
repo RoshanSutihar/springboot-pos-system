@@ -12,7 +12,7 @@ public class SupplierRowMapper implements RowMapper<Supplier>{
     public Supplier mapRow(ResultSet row, int rowNum) throws SQLException {
 	
 		 Supplier u = new Supplier();
-		 
+		 u.setSupplierId(row.getInt("supplier_id"));
 		 u.setSupplierName(row.getString("supplier_name"));
 		 u.setSupplierAddress(row.getString("supplier_add"));
 		 u.setSupplierContact(row.getString("supplier_phone"));

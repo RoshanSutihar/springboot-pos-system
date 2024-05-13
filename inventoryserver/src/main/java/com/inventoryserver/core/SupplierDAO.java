@@ -59,6 +59,19 @@ public class SupplierDAO {
         RowMapper<SupplierDTO> rowMapper = new BeanPropertyRowMapper<>(SupplierDTO.class);
         return jdbcTemplate.query(sql, rowMapper);
 	}
+	
+	
+	 public List<Supplier> getAllSuppliersdetails() {
+		    String query = "SELECT * FROM suppliers";
+		    List<Supplier> customers = jdbcTemplate.query(query, new SupplierRowMapper());
+		    return customers;
+		}
+
+	 public boolean deleteCustomer(String customerId) {
+		    String sql = "DELETE FROM suppliers WHERE supplier_id = ?";
+		    int rowsAffected = jdbcTemplate.update(sql, customerId);
+		    return rowsAffected > 0;
+		}
 
 
 

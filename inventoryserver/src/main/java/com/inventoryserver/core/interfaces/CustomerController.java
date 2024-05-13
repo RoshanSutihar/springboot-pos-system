@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,5 +58,30 @@ public class CustomerController {
 	    public List<CustomerDTO> getAllCustomers() {
 	        return cusDao.getAllCustomers();
 	    }
+	 
+	 
+	 @GetMapping("/getalldetails")
+	    public List<Customer> getAllCustomersDetails() {
+	        return cusDao.getAllCustomersdetails();
+	    }
+	 
+	 @PostMapping("/delete/{cusid}")
+	 public ResponseEntity<String> deleteCustomer(@PathVariable String cusid) {
+	    
+	     if (cusid == null || cusid.isEmpty()) {
+	         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cusid is missing. Please provide a valid customer ID.");
+	     }
+	     
+	    
+	     boolean deleted = cusDao.deleteCustomer(cusid);
+	     
+	    
+	     if (deleted) {
+	         return ResponseEntity.ok().body("Customer with ID " + cusid + " deleted successfully.");
+	     } else {
+	         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with ID " + cusid + " not found.");
+	     }
+	 }
+
 
 }

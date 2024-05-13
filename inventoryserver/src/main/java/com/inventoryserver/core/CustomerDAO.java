@@ -70,4 +70,17 @@ public class CustomerDAO {
 	        // Set other properties as needed
 	        return dto;
 	    }
+	 
+	 public List<Customer> getAllCustomersdetails() {
+		    String query = "SELECT * FROM cutomers";
+		    List<Customer> customers = jdbcTemplate.query(query, new CustomerRowMapper());
+		    return customers;
+		}
+
+	 public boolean deleteCustomer(String customerId) {
+		    String sql = "DELETE FROM cutomers WHERE cus_id = ?";
+		    int rowsAffected = jdbcTemplate.update(sql, customerId);
+		    return rowsAffected > 0;
+		}
+	
 }

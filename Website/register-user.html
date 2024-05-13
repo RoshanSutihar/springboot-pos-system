@@ -11,60 +11,66 @@
 </head>
 <body>
 
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-     
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
                 <a class="nav-link" href="dashboard.html">Dashboard<span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item dropdown">
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Orders
+                    Orders
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                  <a class="dropdown-item" href="#">Add Order</a>
-                  <a class="dropdown-item" href="#">View Order</a>
-                  <a class="dropdown-item" href="fetechorder.html">Search Order</a>
+                    <a class="dropdown-item" href="#">Add Order</a>
+                    <a class="dropdown-item" href="#">View Order</a>
+                    <a class="dropdown-item" href="fetechorder.html">Search Order</a>
                 </div>
-              </li>
-              <li class="nav-item dropdown">
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Product
+                    Product
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                  <a class="dropdown-item" href="#">Add Product</a>
-                  <a class="dropdown-item" href="#">View Products</a>
+                    <a class="dropdown-item" href="#">Add Product</a>
+                    <a class="dropdown-item" href="#">View Products</a>
                 </div>
-              </li>
-              <li class="nav-item dropdown">
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Supplier
+                    Supplier
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
-                  <a class="dropdown-item" href="#">Add Supplier</a>
-                  <a class="dropdown-item" href="#">View Supplier</a>
+                    <a class="dropdown-item" href="#">Add Supplier</a>
+                    <a class="dropdown-item" href="#">View Supplier</a>
                 </div>
-              </li>
-              <li class="nav-item dropdown">
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Customer
+                    Customer
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
-                  <a class="dropdown-item" href="#">Add Customer</a>
-                  <a class="dropdown-item" href="#">View Customers</a>
+                    <a class="dropdown-item" href="#">Add Customer</a>
+                    <a class="dropdown-item" href="#">View Customers</a>
                 </div>
-              </li>
-              <li class="nav-item active" >
+            </li>
+            <li class="nav-item active" >
                 <a class="nav-link" href="register-user.html">Register User</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
+            </li>
+        </ul>
+    </div>
+    <!-- Right-aligned navbar items -->
+    <div class="navbar-nav ml-auto">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="logoutLink">Logout: <span id="usernamePlaceholder"></a></span>
+            </li>
+        </ul>
+    </div>
+</nav>
         
  
 <div class="container mt-5">
@@ -132,6 +138,42 @@
         });
     });
 </script>
+<script>
+  
+
+  function checkLoggedIn() {
+       
+    var username = sessionStorage.getItem('username');
+    if (!username) {
+      
+        window.location.href = 'index.html';
+    }
+}
+
+
+checkLoggedIn();
+
+  var username = sessionStorage.getItem('username');
+
+  
+  var holder = document.getElementById('usernamePlaceholder')
+  if (username) {
+   
+      holder.textContent = username;
+  } else {
+      welcomeMessage.textContent = 'Welcome!';
+  }
+
+
+  document.getElementById('logoutLink').addEventListener('click', function() {
+    // Clear session storage
+    sessionStorage.removeItem('username');
+    // Refresh the page
+    window.location.reload();
+});
+
+</script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 </body>
