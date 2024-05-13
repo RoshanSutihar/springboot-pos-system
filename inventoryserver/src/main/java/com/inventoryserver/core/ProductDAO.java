@@ -29,7 +29,7 @@ public class ProductDAO {
 		        return "Duplicate";
 
 
-		    String insertSQL = "insert into products(product_name, product_desc, product_qty, product_cat, product_supplier, product_price) values (?,?,?, ?,?,?)";
+		    String insertSQL = "insert into products(product_name, product_desc, product_qty, product_cat, product_supp, product_price) values (?,?,?, ?,?,?)";
 		    Long lastInsertedId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
 		    
 		    jdbcTemplate.update(insertSQL,newproduct.getProductName(), newproduct.getProductDesc(), newproduct.getProductQty(), newproduct.getCategoryId(), newproduct.getSupplierId(), newproduct.getProductPrice() );

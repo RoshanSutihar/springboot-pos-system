@@ -1,5 +1,7 @@
 package com.inventoryserver.core.interfaces;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +15,8 @@ import com.inventoryserver.core.Customer;
 import com.inventoryserver.core.CustomerDAO;
 import com.inventoryserver.core.Supplier;
 import com.inventoryserver.core.SupplierDAO;
+import com.inventoryserver.core.dtos.CategoryDTO;
+import com.inventoryserver.core.dtos.SupplierDTO;
 
 @RestController
 @RequestMapping("/suppliers")
@@ -52,6 +56,12 @@ public class SupplierController {
 	@GetMapping("/count")
     public int getTotalSupplierCount() {
         return supDao.getTotalSuppliersCount();
+    }
+	
+	
+	@GetMapping("/getnames")
+    public List<SupplierDTO> getAllCategories() {
+        return supDao.getAllNames();
     }
 
 

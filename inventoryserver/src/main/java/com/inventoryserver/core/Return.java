@@ -3,10 +3,21 @@ package com.inventoryserver.core;
 public class Return {
 
 	private int returnId;
-	private int productId;
+	private String productId;
 	private int qtyReturned;
 	private String returnReason;
-	
+	private int orderId;
+	private String returnDate;
+	public int getOrderId() {
+		return orderId;
+	}
+
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+
 	Return(){}
 	
 	
@@ -16,12 +27,18 @@ public class Return {
 	public void setReturnId(int returnId) {
 		this.returnId = returnId;
 	}
-	public int getProductId() {
+
+
+	public String getProductId() {
 		return productId;
 	}
-	public void setProductId(int productId) {
+
+
+	public void setProductId(String productId) {
 		this.productId = productId;
 	}
+
+
 	public int getQtyReturned() {
 		return qtyReturned;
 	}
@@ -40,6 +57,6 @@ public class Return {
 	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
 	}
-	private String returnDate;
+	
 	
 }

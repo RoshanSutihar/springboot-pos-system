@@ -2,11 +2,16 @@ package com.inventoryserver.core;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import com.inventoryserver.core.dtos.CategoryDTO;
+import com.inventoryserver.core.dtos.SupplierDTO;
 
 @Repository
 public class SupplierDAO {
@@ -46,5 +51,15 @@ public class SupplierDAO {
 	        return jdbcTemplate.queryForObject(sql, Integer.class);
 		 
 	 }
+	 
+	
+
+	public List<SupplierDTO> getAllNames() {
+		String sql = "SELECT supplier_name FROM suppliers";
+        RowMapper<SupplierDTO> rowMapper = new BeanPropertyRowMapper<>(SupplierDTO.class);
+        return jdbcTemplate.query(sql, rowMapper);
+	}
+
+
 
 }
