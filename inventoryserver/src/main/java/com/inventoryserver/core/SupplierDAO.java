@@ -73,6 +73,28 @@ public class SupplierDAO {
 		    return rowsAffected > 0;
 		}
 
+	 public List<Supplier> getSupplierdetails(int userId) {
+		    String query = "SELECT * FROM suppliers WHERE supplier_id = ?";
+		    List<Supplier> customers = jdbcTemplate.query(query, new Object[]{userId}, new SupplierRowMapper());
+		    return customers;
+		}
 
+	 
+	 public String update(Supplier updatedCustomer, int number) {
+		    String updateSQL = "UPDATE suppliers SET supplier_name=?, supplier_add=?, supplier_email=?, supplier_phone=? WHERE supplier_id=?";
+		    
+		    int rowsAffected = jdbcTemplate.update(updateSQL,
+		            updatedCustomer.getSupplierName(),
+		            updatedCustomer.getSupplierAddress(),
+		            updatedCustomer.getSupplierEmail(),
+		            updatedCustomer.getSupplierContact(),
+		            number);
+
+		    if (rowsAffected > 0) {
+		        return "Success"; // Update successful
+		    } else {
+		        return "Error"; // Failed to update
+		    }
+		}
 
 }

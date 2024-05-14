@@ -44,6 +44,25 @@ public class CustomerDAO {
 		    return "Success";
 		}
 	 
+	 
+	 public String update(Customer updatedCustomer, int number) {
+		    String updateSQL = "UPDATE cutomers SET cus_name=?, cus_add=?, cus_email=? cus_phone WHERE cus_id=?";
+		    
+		    int rowsAffected = jdbcTemplate.update(updateSQL,
+		            updatedCustomer.getCustomerName(),
+		            updatedCustomer.getCustomerAdd(),
+		            updatedCustomer.getCustomerEmail(),
+		            updatedCustomer.getCustomerPhone(),
+		            number);
+
+		    if (rowsAffected > 0) {
+		        return "Success"; // Update successful
+		    } else {
+		        return "Error"; // Failed to update
+		    }
+		}
+
+	 
 	 public int getTotalCustomerCount()
 	 {
 		 String sql = "SELECT COUNT(*) AS total_customers FROM cutomers";
@@ -74,6 +93,12 @@ public class CustomerDAO {
 	 public List<Customer> getAllCustomersdetails() {
 		    String query = "SELECT * FROM cutomers";
 		    List<Customer> customers = jdbcTemplate.query(query, new CustomerRowMapper());
+		    return customers;
+		}
+	 
+	 public List<Customer> getCustomersdetails(int userId) {
+		    String query = "SELECT * FROM cutomers WHERE cus_id = ?";
+		    List<Customer> customers = jdbcTemplate.query(query, new Object[]{userId}, new CustomerRowMapper());
 		    return customers;
 		}
 

@@ -48,6 +48,27 @@ public class CustomerController {
 		
 	}
 	
+	
+	@PostMapping("/updateCustomer/{userId}")
+	public ResponseEntity<String> updateUser(@RequestBody Customer updatedCustomer, @PathVariable int userId) {
+	    // Validate if any required field is missing
+	    if (updatedCustomer.getCustomerName().isBlank() || updatedCustomer.getCustomerPhone().isBlank() ||
+	        updatedCustomer.getCustomerAdd().isBlank() || updatedCustomer.getCustomerEmail().isBlank()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Some fields are missing. Please check.");
+	    }
+
+	    // Update the customer details
+	    String result = cusDao.update(updatedCustomer, userId);
+	    if (result.equals("Success")) {
+	        return ResponseEntity.ok().body("Customer details updated successfully.");
+	    } else if (result.equals("Error")) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while updating customer details.");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.CONFLICT).body("A customer with this ID already exists.");
+	    }
+	}
+
+	
 	 @GetMapping("/count")
 	    public int getTotalCustomerCount() {
 	        return cusDao.getTotalCustomerCount();
@@ -64,6 +85,11 @@ public class CustomerController {
 	    public List<Customer> getAllCustomersDetails() {
 	        return cusDao.getAllCustomersdetails();
 	    }
+	 
+	 @GetMapping("/getCustomer/{cusid}")
+	 public List<Customer> getCustomersDetails(@PathVariable int cusid) {
+	     return cusDao.getCustomersdetails(cusid);
+	 }
 	 
 	 @PostMapping("/delete/{cusid}")
 	 public ResponseEntity<String> deleteCustomer(@PathVariable String cusid) {

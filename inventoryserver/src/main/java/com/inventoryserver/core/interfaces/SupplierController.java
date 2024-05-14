@@ -90,5 +90,31 @@ public class SupplierController {
 	     }
 	 }
 
+	 
+	 @GetMapping("/getSupplier/{supid}")
+	 public List<Supplier> getCustomersDetails(@PathVariable int supid) {
+	     return supDao.getSupplierdetails(supid);
+	 }
 
+	 
+	 @PostMapping("/updateSupplier/{supId}")
+		public ResponseEntity<String> updateUser(@RequestBody Supplier updatedCustomer, @PathVariable int supId) {
+		    // Validate if any required field is missing
+		    if (updatedCustomer.getSupplierAddress().isBlank() || updatedCustomer.getSupplierContact().isBlank() ||
+		        updatedCustomer.getSupplierName().isBlank() || updatedCustomer.getSupplierEmail().isBlank()) {
+		        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Some fields are missing. Please check.");
+		    }
+
+		    // Update the customer details
+		    String result = supDao.update(updatedCustomer, supId);
+		    if (result.equals("Success")) {
+		        return ResponseEntity.ok().body("Supplier details updated successfully.");
+		    } else if (result.equals("Error")) {
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while updating customer details.");
+		    } else {
+		        return ResponseEntity.status(HttpStatus.CONFLICT).body("A customer with this ID already exists.");
+		    }
+		}
+	 
+	 
 }
