@@ -1,6 +1,9 @@
 package com.inventoryserver.core.interfaces;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inventoryserver.core.Order;
 import com.inventoryserver.core.OrderDAO;
+import java.io.ByteArrayInputStream;
 
 @RestController
 @RequestMapping("/orders")
@@ -66,6 +70,15 @@ public class OrderController {
             return "{\"error\": \"Failed to fetch order details\"}";
         }
     }
+	
+	
+	@GetMapping("/generatePDF/{orderid}/{userid}")
+	public ResponseEntity<InputStreamResource> createPdf(@PathVariable int orderid, String userid) {
+	    ByteArrayInputStream pdf = ordDao.createPDF(orderid, userid);
+	    HttpHeaders httpHeaders = new HttpHeaders(); // Fix syntax error here
+	    httpHeaders.add("Content-Disposition", "inline; filename=invoice.pdf"); // Fix syntax error and add space before "filename"
+	    return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(pdf)); // Fix syntax error and wrap pdf in InputStreamResource
+	}
 	
 	
 }

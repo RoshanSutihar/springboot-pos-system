@@ -9,6 +9,26 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.itextpdf.io.IOException;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.lowagie.text.Cell;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Table;
+import com.lowagie.text.alignment.HorizontalAlignment;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 @Repository
 public class OrderDAO {
 	
@@ -80,6 +100,8 @@ public String save(Order newOrder) {
 	            return null;
 	        }
 	    }
+	 
+	 
 
 	    private List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
 	        String query = "SELECT * FROM orderdetails WHERE order_id = ?";
@@ -91,4 +113,139 @@ public String save(Order newOrder) {
 	            return null;
 	        }
 	    }
+	    
+	    
+	    
+//	    PDF GENERATOR CODE
+	    public ByteArrayInputStream createPDF(int orderId, String userid) {
+	        // Retrieve order details using getOrderById method
+	        Order order = getOrderById(orderId);
+	        if (order == null) {
+	            System.out.println("Order not found.");
+	            return null;
+	        }
+	        	ByteArrayOutputStream out = new ByteArrayOutputStream();
+	        	
+	        // Path to save the PDF invoice
+	        
+
+	        try {
+	            Document document = new Document();
+	            PdfWriter.getInstance(document, out);
+	            document.open();
+
+	            // Add order details to the PDF
+	            Font font = FontFactory.getFont(FontFactory.HELVETICA, 23, Font.BOLD);
+	            Font font2 = FontFactory.getFont(FontFactory.HELVETICA, 19);
+	            Font font3 = FontFactory.getFont(FontFactory.HELVETICA, 14);
+	            Font font4 = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLD);
+	            
+	            
+	            Paragraph invoiceParagraph = new Paragraph("Invoice", font2);
+	            invoiceParagraph.setAlignment(Element.ALIGN_CENTER);
+
+	            Paragraph head = new Paragraph("Inventory Management System", font);
+	            head.setAlignment(Element.ALIGN_CENTER);
+	            
+	            Paragraph tail = new Paragraph("711 E Boldt Way, Appleton, WI, 54911", font3);
+	            tail.setAlignment(Element.ALIGN_CENTER);
+	            
+	            Paragraph orderdetails = new Paragraph("Order Details", font4);
+	            orderdetails.setAlignment(Element.ALIGN_CENTER);
+	            
+	            
+	            document.add(invoiceParagraph);
+	            document.add(head);
+	            document.add(tail);
+	            document.add(new Paragraph("	     	      	      "));
+	            
+	            
+	            
+	            
+	            document.add(new Paragraph("Order ID: " + order.getOrderID()));
+	            document.add(new Paragraph("Customer Name: " + order.getCustomerID()));
+	            document.add(new Paragraph("Shipment Date: " + order.getShipDate()));
+	            Paragraph orderDateParagraph = new Paragraph("Order Date: " + order.getOrderDate());
+	            orderDateParagraph.setAlignment(Element.ALIGN_LEFT);
+
+	            // Create paragraph for Invoice Date
+	            Paragraph invoiceDateParagraph = new Paragraph("Invoice Date: " + formattedDateTime);
+	            invoiceDateParagraph.setAlignment(Element.ALIGN_RIGHT);
+	            
+	            
+	            Paragraph userpara = new Paragraph("Created By: " + userid);
+	            userpara.setAlignment(Element.ALIGN_RIGHT);
+
+	            // Add the paragraphs to your document
+	            document.add(orderDateParagraph);
+	            document.add(invoiceDateParagraph);
+	            document.add(userpara);
+	            document.add(orderdetails);
+	            
+	            Table table = new Table(4);
+	            table.setWidth(100);;
+
+	            // Add header cells
+	            table.addCell(createHeaderCell("Product Name"));
+	            table.addCell(createHeaderCell("Quantity"));
+	            table.addCell(createHeaderCell("Unit Price"));
+	            table.addCell(createHeaderCell("Total"));
+
+	            
+	            
+	            // Add order details to the table
+	            List<OrderDetail> orderDetails = order.getOrderDetails();
+	            for (OrderDetail detail : orderDetails) {
+	                table.addCell(createCell(detail.getProductId()));
+	                table.addCell(createCell(String.valueOf(detail.getProductQty())));
+	                table.addCell(createCell(String.valueOf(detail.getUnitPrice())));
+	                table.addCell(createCell("$"+String.valueOf(detail.getProductTotal())));
+	            }
+
+	            table.addCell(createCell("  "));
+                table.addCell(createCell("  "));
+                table.addCell(createCell( "Total Amount "));
+                table.addCell(createCell("$"+String.valueOf(order.getTotalAmount())));
+	            // Add the table to the document
+	            document.add(table);
+	            // Add order details
+	            document.close();
+
+	           
+	        } catch (DocumentException  e) {
+	            e.printStackTrace();
+	        }
+	        return new ByteArrayInputStream(out.toByteArray());
+	    }
+	    
+	    
+	 
+	    // Method to create Cell with text, alignment, and bold style for header cells
+	   
+	    private Cell createHeaderCell(String text) {
+	        Cell cell = new Cell();
+	        
+	        Font font4 = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.BOLD);
+	        Paragraph invoiceParagraph = new Paragraph(text, font4);
+            
+            
+	        cell.add(new Paragraph(invoiceParagraph));
+	         // Align text to center
+	        
+	        cell.setHorizontalAlignment(HorizontalAlignment.CENTER);
+	        return cell;
+	    }
+
+	    private Cell createCell(String text) {
+	        Cell cell = new Cell();
+	        cell.add(new Paragraph(text));
+	 // Align text to center
+	        cell.setHorizontalAlignment(HorizontalAlignment.CENTER);
+	        return cell;
+	    }
+
+	    
+	    
+	    
+//	    PDF GENERATOR CODE
 }
