@@ -12,7 +12,7 @@
 <body>
 
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
      
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,8 +27,8 @@
                   Orders
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                  <a class="dropdown-item" href="#">Add Order</a>
-                  <a class="dropdown-item" href="#">View Order</a>
+                  <a class="dropdown-item" href="add-order.html">Add Order</a>
+                  <a class="dropdown-item" href="view-orders.html">View Order</a>
                   <a class="dropdown-item" href="fetchorder.html">Search Order</a>
                 </div>
               </li>
@@ -37,8 +37,9 @@
                   Products
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                  <a class="dropdown-item" href="#">Add Product</a>
-                  <a class="dropdown-item" href="#">View Products</a>
+                  <a class="dropdown-item" href="add-product.html">Add Product</a>
+                  <a class="dropdown-item" href="view-products.html">View Products</a>
+                  <a class="dropdown-item" href="add-category.html">Add Category</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -46,8 +47,8 @@
                   Suppliers
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
-                  <a class="dropdown-item" href="#">Add Supplier</a>
-                  <a class="dropdown-item" href="#">View Suppliers</a>
+                  <a class="dropdown-item" href="add-supplier.html">Add Supplier</a>
+                  <a class="dropdown-item" href="view-suppliers.html">View Suppliers</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -64,6 +65,13 @@
               </li>
             </ul>
           </div>
+          <div class="navbar-nav ml-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logoutLink">Logout: <span id="usernamePlaceholder"></a></span>
+                </li>
+            </ul>
+        </div>
         </nav>
         
  
@@ -132,7 +140,44 @@
         });
     });
 </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Function to check if the user is logged in
+    function checkLoggedIn() {
+        // Retrieve username from session storage
+        var username = sessionStorage.getItem('username');
+        // If username is not found, redirect to login page
+        if (!username) {
+            window.location.href = 'index.html';
+        }
+    }
+
+    // Call the function to check if the user is logged in
+    checkLoggedIn();
+
+    // Retrieve username from session storage
+    var username = sessionStorage.getItem('username');
+
+    // Display welcome message
+    var holder = document.getElementById('usernamePlaceholder');
+    if (username) {
+        holder.textContent = username;
+    } else {
+        // If username is not found in session storage, redirect to login page
+        window.location.href = 'index.html';
+    }
+
+    // Add event listener for logout link
+    document.getElementById('logoutLink').addEventListener('click', function() {
+        // Clear session storage
+        sessionStorage.removeItem('username');
+        // Redirect to login page
+        window.location.href = 'index.html';
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

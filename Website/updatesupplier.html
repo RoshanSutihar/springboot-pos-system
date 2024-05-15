@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update Customer</title>
+  <title>Update Supplier</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -18,7 +16,6 @@
       font-size: 2rem; /* larger font size for card value */
       font-weight: bold; /* bold font weight for card value */
     }
-    
   </style>
 </head>
 <body>
@@ -68,7 +65,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
                 <a class="dropdown-item" href="add-customer.html">Add Customer</a>
-                <a class="dropdown-item" href="view-customers.html">View Customers<span class="sr-only">(current)</a>
+                <a class="dropdown-item" href="view-customers.html">View Customers</a>
               </div>
             </li>
             <li class="nav-item">
@@ -89,149 +86,147 @@
 
       
 <div class="container mt-5">
-    <h2>Update Customer</h2>
+    <h2>Update Supplier</h2>
     <form id="updateCustomerForm">
         <div class="form-group">
-            <label for="nameInput">Name:</label>
+            <label for="nameInput">Supplier Name:</label>
             <input type="text" class="form-control" id="nameInput" name="name">
         </div>
         <div class="form-group">
-            <label for="addressInput">Address:</label>
-            <input type="text" class="form-control" id="addressInput" name="address">
-        </div>
-        <div class="form-group">
-            <label for="phoneInput">Phone:</label>
+            <label for="phoneInput">Supplier Phone:</label>
             <input type="text" class="form-control" id="phoneInput" name="phone">
         </div>
         <div class="form-group">
-            <label for="emailInput">Email:</label>
+          <label for="addressInput">Supplier Address:</label>
+          <input type="text" class="form-control" id="addressInput" name="address">
+      </div>
+        <div class="form-group">
+            <label for="emailInput">Supplier Email:</label>
             <input type="email" class="form-control" id="emailInput" name="email">
         </div>
-        <button type="submit" class="btn btn-primary">Update Customer</button>
+        <button type="submit" class="btn btn-primary">Update Supplier</button>
     </form>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 <script>
     $(document).ready(function() {
         // Retrieve customerId from URL query parameter
         const urlParams = new URLSearchParams(window.location.search);
-        const customerId = urlParams.get('customerId');
+        const SupplierId = urlParams.get('supplierId');
         
         // Fetch customer details using the customerId
-        fetchCustomerDetails(customerId);
-        console.log(customerId);
+        fetchSupplierDetails(supplierId);
+        console.log(supplierId);
 
         // Handle form submission
        // Handle form submission
-$('#updateCustomerForm').submit(function(event) {
+$('#updateSupplierForm').submit(function(event) {
     event.preventDefault();
 
     // Get form data
-    const name = $('#nameInput').val();
-    const address = $('#addressInput').val();
-    const phone = $('#phoneInput').val();
-    const email = $('#emailInput').val();
+    const supplierName = $('#nameInput').val();
+    const supplierContact = $('#phoneInput').val();
+    const supplierAddress = $('#addressInput').val();
+    const supplierEmail = $('#emailInput').val();
 
     // Check if any required field is empty
-    if (!name || !address || !phone || !email) {
+    if (!supplierName || !supplierContact || !supplierAddress || !supplierEmail) {
         alert('Please fill in all the required fields.');
         return;
     }
 
     // Create formData object in the correct format
     const formData = {
-        customerID: customerId,
-        customerName: name,
-        customerAdd: address,
-        customerPhone: phone,
-        customerEmail: email
+        supplierId: supplierId,
+        supplierName: supplierName,
+        SupplierContact: supplierContact,
+        supplierAddress: supplierAddress,
+        supplierEmail: supplierEmail
     };
-
+  
     // Submit updated customer data
     $.ajax({
-        url: `http://localhost:8085/customers/updateCustomer/${customerId}`,
+        url: `http://localhost:8085/suppliers/updateSupplier/${supplierId}`,
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(formData),
         success: function(response) {
             alert(response);
             // Redirect to view-customers.html or any other page after successful update
-            window.location.href = 'view-customers.html';
+            window.location.href = 'view-suppliers.html';
         },
         error: function(xhr) {
-            alert('Error updating customer: ' + xhr.responseText);
+            alert('Error updating supplier: ' + xhr.responseText);
         }
     });
 });
 
     });
 
-    function fetchCustomerDetails(customerId) {
+    function fetchSupplierDetails(supplierId) {
         $.ajax({
-            url: `http://localhost:8085/customers/getCustomer/${customerId}`,
+            url: `http://localhost:8085/suppliers/getSupplier/${supplierId}`,
             type: 'GET',
             dataType: 'json',
             success: function(data) {
                 // Check if data is not empty and is an array
                 if (Array.isArray(data) && data.length > 0) {
                     // Access the first element of the array
-                    const customer = data[0];
+                    const supplier = data[0];
                     // Populate form fields with customer details
-                    $('#nameInput').val(customer.customerName);
-                    $('#addressInput').val(customer.customerAdd);
-                    $('#phoneInput').val(customer.customerPhone);
-                    $('#emailInput').val(customer.customerEmail);
+                    $('#nameInput').val(supplier.supplierName);
+                    $('#phoneInput').val(supplier.supplierContact);
+                    $('#addressInput').val(supplier.supplierAddress);
+                    $('#emailInput').val(supplier.supplierEmail);
                 } else {
-                    alert('No customer data found.');
+                    alert('No Supplier data found.');
                 }
             },
             error: function() {
-                alert('Failed to retrieve customer details.');
+                alert('Failed to retrieve Supplier details.');
             }
         });
     }
-
+  
 </script>
+
 <script>
-    // Function to check if the user is logged in
-    function checkLoggedIn() {
-        // Retrieve username from session storage
-        var username = sessionStorage.getItem('username');
-        // If username is not found, redirect to login page
-        if (!username) {
-            window.location.href = 'index.html';
-        }
-    }
+  // Function to check if the user is logged in
+  function checkLoggedIn() {
+      // Retrieve username from session storage
+      var username = sessionStorage.getItem('username');
+      // If username is not found, redirect to login page
+      if (!username) {
+          window.location.href = 'index.html';
+      }
+  }
 
-    // Call the function to check if the user is logged in
-    checkLoggedIn();
+  // Call the function to check if the user is logged in
+  checkLoggedIn();
 
-    // Retrieve username from session storage
-    var username = sessionStorage.getItem('username');
+  // Retrieve username from session storage
+  var username = sessionStorage.getItem('username');
 
-    // Display welcome message
-    var holder = document.getElementById('usernamePlaceholder');
-    if (username) {
-        holder.textContent = username;
-    } else {
-        // If username is not found in session storage, redirect to login page
-        window.location.href = 'index.html';
-    }
+  // Display welcome message
+  var holder = document.getElementById('usernamePlaceholder');
+  if (username) {
+      holder.textContent = username;
+  } else {
+      // If username is not found in session storage, redirect to login page
+      window.location.href = 'index.html';
+  }
 
-    // Add event listener for logout link
-    document.getElementById('logoutLink').addEventListener('click', function() {
-        // Clear session storage
-        sessionStorage.removeItem('username');
-        // Redirect to login page
-        window.location.href = 'index.html';
-    });
+  // Add event listener for logout link
+  document.getElementById('logoutLink').addEventListener('click', function() {
+      // Clear session storage
+      sessionStorage.removeItem('username');
+      // Redirect to login page
+      window.location.href = 'index.html';
+  });
 </script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-
 
 </body>
 </html>
