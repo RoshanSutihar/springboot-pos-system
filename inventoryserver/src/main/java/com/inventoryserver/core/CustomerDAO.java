@@ -46,7 +46,7 @@ public class CustomerDAO {
 	 
 	 
 	 public String update(Customer updatedCustomer, int number) {
-		    String updateSQL = "UPDATE cutomers SET cus_name=?, cus_add=?, cus_email=? cus_phone WHERE cus_id=?";
+		    String updateSQL = "UPDATE cutomers SET cus_name=?, cus_add=?, cus_email=?, cus_phone=? WHERE cus_id=?";
 		    
 		    int rowsAffected = jdbcTemplate.update(updateSQL,
 		            updatedCustomer.getCustomerName(),
