@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Customer</title>
+        <title>Add Supplier</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       
@@ -56,7 +56,7 @@
                     Suppliers
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
-                    <a class="dropdown-item" href="add-supplier.html">Add Supplier</a>
+                    <a class="dropdown-item" href="add-supplier.html">Add Supplier<span class="sr-only">(current)</span></a>
                     <a class="dropdown-item" href="view-suppliers.html">View Suppliers</a>
                   </div>
                 </li>
@@ -65,7 +65,7 @@
                     Customers
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
-                    <a class="dropdown-item" href="add-customer.html">Add Customer<span class="sr-only">(current)</span></a>
+                    <a class="dropdown-item" href="add-customer.html">Add Customer</a>
                     <a class="dropdown-item" href="view-customers.html">View Customers</a>
                   </div>
                 </li>
@@ -84,49 +84,49 @@
           </nav>
 
           <div class="container mt-5">
-            <h2>Add New Customer</h2>
-            <form id="newCustomerForm">
+            <h2>Add New Supplier</h2>
+            <form id="newSupplierForm">
                 <div class="form-group">
-                    <label for="customerName">Name</label>
-                    <input type="text" class="form-control" id="customerName" required>
+                    <label for="supplierName">Supplier Name</label>
+                    <input type="text" class="form-control" id="supplierName" required>
                 </div>
                 <div class="form-group">
-                    <label for="customerAdd">Address</label>
-                    <input type="text" class="form-control" id="customerAdd" required>
+                    <label for="supplierContact">Supplier Phone</label>
+                    <input type="text" class="form-control" id="supplierContact" required>
                 </div>
                 <div class="form-group">
-                    <label for="customerPhone">Phone</label>
-                    <input type="text" class="form-control" id="customerPhone" required>
+                    <label for="supplierAddress">Supplier Address</label>
+                    <input type="text" class="form-control" id="supplierAddress" required>
                 </div>
                 <div class="form-group">
-                    <label for="customerEmail">Email</label>
-                    <input type="email" class="form-control" id="customerEmail" required>
+                    <label for="supplierEmail">Supplier Email</label>
+                    <input type="email" class="form-control" id="supplierEmail" required>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="addCustomer()">Submit</button>
+                <button type="button" class="btn btn-primary" onclick="addSupplier()">Submit</button>
             </form>
         </div>
     
         <script>
-            function addCustomer() {
+            function addSupplier() {
                 var data = {
-                    customerName: $('#customerName').val(),
-                    customerAdd: $('#customerAdd').val(),
-                    customerPhone: $('#customerPhone').val(),
-                    customerEmail: $('#customerEmail').val()
+                    supplierName: $('#supplierName').val(),
+                    supplierContact: $('#supplierContact').val(),
+                    supplierAddress: $('#supplierAddress').val(),
+                    supplierEmail: $('#supplierEmail').val()
                 };
     
                 $.ajax({
-                    url: 'http://localhost:8085/customers/newcustomer',
+                    url: 'http://localhost:8085/suppliers/newsupplier',
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function(response) {
-                        alert('Customer added successfully!');
+                        alert('Supplier added successfully!');
                         // Optionally, clear the form or handle further logic here
-                        $('#newCustomerForm').trigger("reset");
+                        $('#newSupplierForm').trigger("reset");
                     },
                     error: function(xhr, status, error) {
-                        alert('Error adding customer: ' + xhr.responseText);
+                        alert('Error adding Supplier: ' + xhr.responseText);
                     }
                 });
             }
