@@ -94,6 +94,7 @@ public String save(Order newOrder) {
 	                order.setOrderDetails(orderDetails);
 	                return order;
 	            }
+	            
 	            return null;
 	        } catch (Exception ex) {
 	            ex.printStackTrace();
@@ -117,6 +118,7 @@ public String save(Order newOrder) {
 	    
 	    
 //	    PDF GENERATOR CODE
+	    
 	    public ByteArrayInputStream createPDF(int orderId, String userid) {
 	        // Retrieve order details using getOrderById method
 	        Order order = getOrderById(orderId);
@@ -150,6 +152,14 @@ public String save(Order newOrder) {
 	            Paragraph tail = new Paragraph("711 E Boldt Way, Appleton, WI, 54911", font3);
 	            tail.setAlignment(Element.ALIGN_CENTER);
 	            
+	            Paragraph footer = new Paragraph("920-832-6666 info@ims.com", font3);
+	            footer.setAlignment(Element.ALIGN_CENTER);
+	            
+	            
+	            Paragraph invoiceDateParagraph = new Paragraph("Invoice Date: " + formattedDateTime);
+	            invoiceDateParagraph.setAlignment(Element.ALIGN_RIGHT);
+	        
+	            
 	            Paragraph orderdetails = new Paragraph("Order Details", font4);
 	            orderdetails.setAlignment(Element.ALIGN_CENTER);
 	            
@@ -157,29 +167,35 @@ public String save(Order newOrder) {
 	            document.add(invoiceParagraph);
 	            document.add(head);
 	            document.add(tail);
+	            document.add(footer);
+	            
+	            document.add(new Paragraph("	     	      	      "));
+	            document.add(invoiceDateParagraph);
 	            document.add(new Paragraph("	     	      	      "));
 	            
 	            
 	            
 	            
-	            document.add(new Paragraph("Order ID: " + order.getOrderID()));
+	            document.add(new Paragraph("Invoice Number: " + order.getOrderID()));
 	            document.add(new Paragraph("Customer Name: " + order.getCustomerID()));
+	            document.add(new Paragraph("Order Date: " + order.getOrderDate()));
 	            document.add(new Paragraph("Shipment Date: " + order.getShipDate()));
-	            Paragraph orderDateParagraph = new Paragraph("Order Date: " + order.getOrderDate());
-	            orderDateParagraph.setAlignment(Element.ALIGN_LEFT);
+	            
+	           
 
 	            // Create paragraph for Invoice Date
-	            Paragraph invoiceDateParagraph = new Paragraph("Invoice Date: " + formattedDateTime);
-	            invoiceDateParagraph.setAlignment(Element.ALIGN_RIGHT);
+	           	            
 	            
-	            
-	            Paragraph userpara = new Paragraph("Created By: " + userid);
+	            Paragraph userpara = new Paragraph(userid);
 	            userpara.setAlignment(Element.ALIGN_RIGHT);
-
+	            
+	            
+	            Paragraph signature = new Paragraph("-------------------");
+	            signature.setAlignment(Element.ALIGN_RIGHT);
 	            // Add the paragraphs to your document
-	            document.add(orderDateParagraph);
-	            document.add(invoiceDateParagraph);
-	            document.add(userpara);
+	           
+	            
+	           
 	            document.add(orderdetails);
 	            
 	            Table table = new Table(4);
@@ -204,11 +220,28 @@ public String save(Order newOrder) {
 
 	            table.addCell(createCell("  "));
                 table.addCell(createCell("  "));
-                table.addCell(createCell( "Total Amount "));
-                table.addCell(createCell("$"+String.valueOf(order.getTotalAmount())));
+                table.addCell(createBoldCell( "Total Amount "));
+                table.addCell(createBoldCell("$"+String.valueOf(order.getTotalAmount())));
 	            // Add the table to the document
 	            document.add(table);
 	            // Add order details
+	            document.add(new Paragraph("	     	      	      "));
+	            document.add(new Paragraph("	     	      	      "));
+	            
+	            document.add(signature);
+	            document.add(userpara);
+	            document.add(new Paragraph("	     	      	      "));
+	            
+	            document.add(new Paragraph("=========================================================================="));
+	            
+	            Paragraph toc = new Paragraph("Terns & Conditions", font4);
+	            toc.setAlignment(Element.ALIGN_CENTER);
+	            
+	           
+	            document.add(toc);
+	            document.add(new Paragraph("1) Returns must be presented within 15 days of Invoice Date."));
+	            document.add(new Paragraph("2) E&OE"));
+	            
 	            document.close();
 
 	           
@@ -245,7 +278,19 @@ public String save(Order newOrder) {
 	    }
 
 	    
-	    
+	    private Cell createBoldCell(String text) {
+	        Cell cell = new Cell();
+	        
+	        Font font4 = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.BOLD);
+	        Paragraph invoiceParagraph = new Paragraph(text, font4);
+            
+            
+	        cell.add(new Paragraph(invoiceParagraph));
+	 // Align text to center
+	        cell.setHorizontalAlignment(HorizontalAlignment.CENTER);
+	        return cell;
+	    }
+
 	    
 //	    PDF GENERATOR CODE
 }
