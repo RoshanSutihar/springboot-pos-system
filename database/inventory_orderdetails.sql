@@ -30,7 +30,7 @@ CREATE TABLE `orderdetails` (
   `product_unitprice` double DEFAULT NULL,
   `product_total` double DEFAULT NULL,
   PRIMARY KEY (`details_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `orderdetails` (
 
 LOCK TABLES `orderdetails` WRITE;
 /*!40000 ALTER TABLE `orderdetails` DISABLE KEYS */;
-INSERT INTO `orderdetails` VALUES (1,4,NULL,0,50,NULL),(2,4,NULL,0,30,NULL),(3,5,NULL,2,50,NULL),(4,5,NULL,1,30,NULL),(5,6,'Product c',2,50,NULL),(6,6,'Product d',1,30,NULL),(7,8,'Product t',2,50,100),(8,8,'Product n',1,30,30),(9,9,'Product t',2,50,100),(10,9,'Product n',1,30,30),(11,10,'Product ABC',2,50,100),(12,11,'Product ABC',2,50,100);
+INSERT INTO `orderdetails` VALUES (1,4,NULL,0,50,NULL),(2,4,NULL,0,30,NULL),(3,5,NULL,2,50,NULL),(4,5,NULL,1,30,NULL),(5,6,'Product c',2,50,NULL),(6,6,'Product d',1,30,NULL),(7,8,'Product t',2,50,100),(8,8,'Product n',1,30,30),(9,9,'Product t',2,50,100),(10,9,'Product n',1,30,30),(11,10,'Product ABC',2,50,100),(12,11,'Product ABC',2,50,100),(13,12,'Product ABC',12,7.8,93.6);
 /*!40000 ALTER TABLE `orderdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-10 15:24:35
+-- Dump completed on 2024-05-15 12:36:28

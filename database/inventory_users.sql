@@ -36,7 +36,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('bb1bd68f-0ecc-11ef-ae3d-0a002700000f','test_user','$2b$12$wFno5vn2G9AMkrnTe0xqsOIjaDlLUHmcOIH0YDM/upjVW4F551Jja');
+INSERT INTO `users` VALUES ('424387b8-100b-11ef-ae3d-0a002700000f','dey','$2b$12$v.v6gnEmVT651wdPehyV5e1/UsQgXAVTfftKyCRhVkVZHperwKRW2'),('bb1bd68f-0ecc-11ef-ae3d-0a002700000f','test_user','$2b$12$wFno5vn2G9AMkrnTe0xqsOIjaDlLUHmcOIH0YDM/upjVW4F551Jja'),('e50f34b6-100a-11ef-ae3d-0a002700000f','roshan','$2b$12$FEIOK/mruPOFtH/gsNScuOu9OpuvgT7lct47HrsJsE0CzUtzcPkja');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-10 15:24:34
+-- Dump completed on 2024-05-15 12:36:29

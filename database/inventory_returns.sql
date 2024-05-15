@@ -16,30 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cutomers`
+-- Table structure for table `returns`
 --
 
-DROP TABLE IF EXISTS `cutomers`;
+DROP TABLE IF EXISTS `returns`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cutomers` (
-  `cus_id` int NOT NULL AUTO_INCREMENT,
-  `cus_name` varchar(60) DEFAULT NULL,
-  `cus_phone` varchar(45) DEFAULT NULL,
-  `cus_add` varchar(80) DEFAULT NULL,
-  `cus_email` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`cus_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `returns` (
+  `return_id` int NOT NULL AUTO_INCREMENT,
+  `return_orderid` int DEFAULT NULL,
+  `return_product` varchar(60) DEFAULT NULL,
+  `return_qty` int DEFAULT NULL,
+  `return_reason` varchar(120) DEFAULT NULL,
+  `return_date` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`return_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cutomers`
+-- Dumping data for table `returns`
 --
 
-LOCK TABLES `cutomers` WRITE;
-/*!40000 ALTER TABLE `cutomers` DISABLE KEYS */;
-INSERT INTO `cutomers` VALUES (1,'John Doe','555-1234','123 Main St','john.doe3@example.com'),(3,'Alice Smith','555-5678','456 Elm St','alice.smith@example.com'),(4,'Bob Johnson','555-9012','789 Oak St','bob.johnson1@example.com'),(7,'Sophia Brown','555-2345','303 Birch St','sophia.brown@example.com'),(8,'Jacob Miller','555-6789','404 Cedar St','jacob.miller@example.com'),(9,'Isabella Gonzales','555-78901','909 Elm St','isabella.gonzales@example.com'),(10,'William Hernandez','555-34536','808 Oak St','william.hernandez@example.com'),(11,'James Lopez','555-23345','1010 Cedar St','james.lopez@example.com'),(12,'Ava Perez','555-67869','1111 Birch St','ava.perez@example.com'),(13,'Logan Reyes','555-12324','1212 Maple St','logan.reyes@example.com'),(14,'Bob Johnson test','55590129183','789 Oak St ','bob.johnson1@ample.com');
-/*!40000 ALTER TABLE `cutomers` ENABLE KEYS */;
+LOCK TABLES `returns` WRITE;
+/*!40000 ALTER TABLE `returns` DISABLE KEYS */;
+INSERT INTO `returns` VALUES (1,9,'Product t',5,'Defective item','2024-05-12');
+/*!40000 ALTER TABLE `returns` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
