@@ -110,6 +110,7 @@
 
         <div id="order-details" class="mt-5" style="display: none;">
             <h2>Order Details</h2>
+           
             <form id="view-order-form">
                 <div class="form-group">
                     <label for="order-id-disabled">Order ID:</label>
@@ -147,71 +148,69 @@
                     <!-- Order details will be dynamically added here -->
                 </tbody>
             </table>
+            <a href="" id = "printInvoice" class="btn btn-success" target="_blank"> Print Invoice</a>
         </div>
-    </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <button id="print-button" class="btn btn-secondary mt-3" style="display: none;">Print Order Details</button>
-            </div>
-        </div>
+      
     </div>
 
 
 
     <script>
+
         $(document).ready(function() {
-            // Handle form submission
-            $('#order-form').submit(function(event) {
-                event.preventDefault();
-                var orderId = $('#order-id').val();
-                // Make AJAX call to fetch order details
-                $.get('http://localhost:8085/orders/viewdetails/' + orderId, function(data) {
-                    try {
-                        // Parse the text response into JSON format
-                        data = JSON.parse(data);
-                        // Populate order details form
-                        $('#order-id-disabled').val(data.orderID);
-                        $('#order-date').val(data.orderDate);
-                        $('#customer-id').val(data.customerID);
-                        $('#ship-date').val(data.shipDate);
-                        $('#total-amount').val('$' + data.totalAmount.toFixed(2));
-                        // Populate order details table
-                        var orderDetailsTable = '';
-                        data.orderDetails.forEach(function(detail) {
-                            orderDetailsTable += '<tr>';
-                            orderDetailsTable += '<td>' + detail.productId + '</td>';
-                            orderDetailsTable += '<td>' + detail.productQty + '</td>';
-                            orderDetailsTable += '<td>$' + detail.unitPrice.toFixed(2) + '</td>';
-                            orderDetailsTable += '<td>$' + detail.productTotal.toFixed(2) + '</td>';
-                            orderDetailsTable += '</tr>';
-                        });
-                        $('#order-details-table').html(orderDetailsTable);
-                        // Show order details section
-                        $('#order-details').show();
-                        // Hide error message if displayed
-                        $('#error-message').hide();
-                        $('#order-form').hide();
-                    } catch (error) {
-                        // Display error message
-                        $('#error-message').text('Order details not availabe.').show();
-                        // Hide order details section
-                        $('#order-details').hide();
-                    }
-                }).fail(function() {
-                    // Display error message
-                    $('#error-message').text('Failed to fetch order details.').show();
-                    // Hide order details section
-                    $('#order-details').hide();
+    // Handle form submission
+    $('#order-form').submit(function(event) {
+        event.preventDefault();
+        var orderId = $('#order-id').val();
+        var username1 = sessionStorage.getItem('username');
+        // Make AJAX call to fetch order details
+        $.get('http://localhost:8085/orders/viewdetails/' + orderId, function(data) {
+            try {
+                // Parse the text response into JSON format
+                data = JSON.parse(data);
+                // Populate order details form
+                $('#order-id-disabled').val(data.orderID);
+                $('#order-date').val(data.orderDate);
+                $('#customer-id').val(data.customerID);
+                $('#ship-date').val(data.shipDate);
+                $('#total-amount').val('$' + data.totalAmount.toFixed(2));
+                // Initialize productId variable
+                var productId;
+                // Populate order details table
+                var orderDetailsTable = '';
+                data.orderDetails.forEach(function(detail) {
+                    orderDetailsTable += '<tr>';
+                    orderDetailsTable += '<td>' + detail.productId + '</td>';
+                    orderDetailsTable += '<td>' + detail.productQty + '</td>';
+                    orderDetailsTable += '<td>$' + detail.unitPrice.toFixed(2) + '</td>';
+                    orderDetailsTable += '<td>$' + detail.productTotal.toFixed(2) + '</td>';
+                    orderDetailsTable += '</tr>';
+                    // Assign productId
+                    productId = detail.productId;
                 });
-            });
-            $('.container#print-button').click(function() {
-                
-               
-                window.print();
-                
-            });
+                // Set href attribute with productId and username1
+                $('#printInvoice').attr('href', 'http://localhost:8085/orders/generatePDF/' + data.orderID + '/' + username1);
+                $('#order-details-table').html(orderDetailsTable);
+                // Show order details section
+                $('#order-details').show();
+                // Hide error message if displayed
+                $('#error-message').hide();
+                $('#order-form').hide();
+            } catch (error) {
+                // Display error message
+                $('#error-message').text('Order details not available.').show();
+                // Hide order details section
+                $('#order-details').hide();
+            }
+        }).fail(function() {
+            // Display error message
+            $('#error-message').text('Failed to fetch order details.').show();
+            // Hide order details section
+            $('#order-details').hide();
         });
+    });
+});
+
     </script>
     
     <!-- Main fetch system end -->
