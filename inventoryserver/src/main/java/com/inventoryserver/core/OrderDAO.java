@@ -132,7 +132,11 @@ public String save(Order newOrder) {
 	    	    }
 	    }
 	    
-	    
+		 public List<Order> getAllOrders() {
+			    String query = "SELECT * FROM orders";
+			    List<Order> customers = jdbcTemplate.query(query, new OrderRowMapper());
+			    return customers;
+			}
 	    
 	    
 //	    PDF GENERATOR CODE

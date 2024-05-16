@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inventoryserver.core.Customer;
 import com.inventoryserver.core.Order;
 import com.inventoryserver.core.OrderDAO;
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -91,5 +93,11 @@ public class OrderController {
 		        return ResponseEntity.ok().body("success" );
 		    }
 	}
+	
+	
+	@GetMapping("/getallorders")
+    public List<Order> getAllOrders() {
+        return ordDao.getAllOrders();
+    }
 	
 }
