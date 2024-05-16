@@ -81,4 +81,15 @@ public class OrderController {
 	}
 	
 	
+	@PostMapping("{orderid}/updateStatus/{status}")
+	public ResponseEntity<String> setStatus(@PathVariable String status, @PathVariable int orderid ) {
+		 String orderId = ordDao.changeStatus(status, orderid);
+
+		    if (orderId.equals("Error")) {
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unable to save the order");
+		    } else {
+		        return ResponseEntity.ok().body("success" );
+		    }
+	}
+	
 }

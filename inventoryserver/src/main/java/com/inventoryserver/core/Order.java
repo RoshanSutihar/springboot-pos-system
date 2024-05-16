@@ -9,10 +9,19 @@ public class Order {
     private String customerID;
     private String shipDate;
     private double totalAmount;
+    private String orderStatus;
     private List<OrderDetail> orderDetails;
 
  
-    public Order(int orderID, String orderDate, String customerID, String shipDate, double totalAmount, List<OrderDetail> orderDetails) {
+    public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public Order(int orderID, String orderDate, String customerID, String shipDate, double totalAmount, List<OrderDetail> orderDetails) {
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.customerID = customerID;

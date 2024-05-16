@@ -56,9 +56,9 @@ public class CustomerDAO {
 		            number);
 
 		    if (rowsAffected > 0) {
-		        return "Success"; // Update successful
+		        return "Success";
 		    } else {
-		        return "Error"; // Failed to update
+		        return "Error"; 
 		    }
 		}
 

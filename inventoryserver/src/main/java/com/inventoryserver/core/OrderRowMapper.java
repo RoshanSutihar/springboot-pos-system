@@ -17,6 +17,7 @@ public class OrderRowMapper implements RowMapper<Order> {
 		u.setOrderDate(row.getString("order_date"));
 		u.setShipDate(row.getString("ship_date"));
 		u.setTotalAmount(row.getDouble("total_amount"));
+		u.setOrderStatus(row.getString("order_status"));
 		return u;
 		
 		
