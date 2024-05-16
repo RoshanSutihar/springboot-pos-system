@@ -1,303 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ordering Page</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .card-title {
-      font-size: 1.2rem; /* smaller font size for card title */
-    }
-    .card-value {
-      font-size: 2rem; /* larger font size for card value */
-      font-weight: bold; /* bold font weight for card value */
-    }
-    
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-section Ordering Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .section {
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-     
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="dashboard.html">Dashboard</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Orders
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                    <a class="dropdown-item" href="add-order.html">Add Order<span class="sr-only">(current)</span></a>
-                    <a class="dropdown-item" href="view-orders.html">View Order</a>
-                    <a class="dropdown-item" href="fetchorder.html">Search Order</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Products
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                <a class="dropdown-item" href="add-product.html">Add Product</a>
-                <a class="dropdown-item" href="view-products.html">View Products</a>
-                <a class="dropdown-item" href="add-category.html">Add Category</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Suppliers
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
-                <a class="dropdown-item" href="add-supplier.html">Add Supplier</a>
-                <a class="dropdown-item" href="view-suppliers.html">View Suppliers</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Customers
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
-                <a class="dropdown-item" href="add-customer.html">Add Customer</a>
-                <a class="dropdown-item" href="view-customers.html">View Customers</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="register-user.html">Register User</a>
-            </li>
-          </ul>
 
-        </div>
-        <div class="navbar-nav ml-auto">
-          <ul class="navbar-nav">
-              <li class="nav-item">
-                  <a class="nav-link" href="#" id="logoutLink">Logout: <span id="usernamePlaceholder"></a></span>
-              </li>
-          </ul>
-      </div>
-      </nav>
 
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="dashboard.html">Dashboard</span></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Orders</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+            <a class="dropdown-item" href="add-order.html">Add Order</a>
+            <a class="dropdown-item" href="view-orders.html">View Order</a>
+            <a class="dropdown-item" href="fetchorder.html">Search Order</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+            <a class="dropdown-item" href="add-product.html">Add Product</a>
+            <a class="dropdown-item" href="view-products.html">View Products</a>
+            <a class="dropdown-item" href="add-category.html">Add Category</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Suppliers</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+            <a class="dropdown-item" href="add-supplier.html">Add Supplier</a>
+            <a class="dropdown-item" href="view-suppliers.html">View Suppliers</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Customers</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
+            <a class="dropdown-item" href="add-customer.html">Add Customer</a>
+            <a class="dropdown-item" href="view-customers.html">View Customers</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="register-user.html">Register User</a>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-nav ml-auto">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="logoutLink">Logout: <span id="usernamePlaceholder"></a></span>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
   <div class="container mt-5">
-    <div class="row">
-      <!-- Customer Information Section -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            Customer Information
-          </div>
-          <div class="card-body">
-            <div class="form-group">
-              <label for="customerName">Customer Name:</label>
-              <select class="form-control" id="customerName" required>
-                <option value="------ Select ----" value = " "></option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="shipDate">Shipping Date:</label>
-              <input type="date" class="form-control" id="shipDate">
-            </div>
-          </div>
-        </div>
-      </div>
+    <h2>Order Form</h2>
 
-      <!-- Product Selection Section -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            Product Selection
-          </div>
-          <div class="card-body">
+    <!-- Section 1: Select Customer and Shipping Date -->
+    <div class="section">
+        <h3>Select Customer and Shipping Date</h3>
+        <form id="customer-form">
             <div class="form-group">
-              <label for="productName">Product Name:</label>
-              <select class="form-control" id="productName" required>
-                <option value="------ Select ----" value = " "></option>
-              </select>
+                <label for="customer-name">Customer Name:</label>
+                <select id="customer-name" class="form-control" required>
+                    <option value="">Select Customer</option>
+                </select>
             </div>
             <div class="form-group">
-              <label for="quantity">Quantity:</label>
-              <input type="number" class="form-control" id="quantity" min="1" required>
+                <label for="shipping-date">Shipping Date:</label>
+                <input type="date" id="shipping-date" class="form-control" required>
             </div>
-            <button class="btn btn-primary" id="addToOrder">Add to Order</button>
-            <button class="btn btn-success text-right" id="submitOrder">Submit Order</button>
-          </div>
-        </div>
-      </div>
+        </form>
     </div>
 
-    <!-- Order Summary Section -->
-    <div class="row mt-3">
-      <div class="col">
-        <div class="card">
-          <div class="card-header">
-            Order Summary
-          </div>
-          <div class="card-body">
-            <table class="table">
-              <thead>
+    <!-- Section 2: Add Items -->
+    <div class="section">
+        <h3>Add Items</h3>
+        <form id="items-form">
+            <div class="form-group">
+                <label for="product-name">Product Name:</label>
+                <select id="product-name" class="form-control">
+                    <option value="">Select Product</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="product-qty">Quantity:</label>
+                <input type="number" id="product-qty" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="unit-price">Unit Price:</label>
+                <input type="number" step="0.01" id="unit-price" class="form-control" readonly>
+            </div>
+            <button type="button" id="add-item" class="btn btn-primary">Add Item</button>
+        </form>
+
+        <table class="table table-striped mt-3">
+            <thead>
                 <tr>
-                  <th>Product Name</th>
-                  <th>Quantity</th>
-                  <th>Total</th>
-                  <th>Action</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Product Total</th>
+                    <th>Action</th>
                 </tr>
-              </thead>
-              <tbody id="orderSummary">
-                <!-- Order items will be added here -->
-              </tbody>
-            </table>
-          </div>
+            </thead>
+            <tbody id="order-items-table"></tbody>
+        </table>
+
+        <div class="form-group">
+            <label for="overall-total">Overall Total:</label>
+            <input type="text" id="overall-total" class="form-control" readonly>
         </div>
-      </div>
     </div>
-  </div>
 
-  <script>
-    
+    <!-- Section 3: Select Payment Type -->
+    <div class="section">
+        <h3>Select Payment Type</h3>
+        <form id="payment-form">
+            <div class="form-group">
+                <label for="payment-type">Payment Type:</label>
+                <select id="payment-type" class="form-control">
+                    <option value="credit-card">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cash">Cash</option>
+                </select>
+            </div>
+            <button type="button" id="submit-order" class="btn btn-success">Submit Order</button>
+        </form>
+    </div>
+</div>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script>
     $(document).ready(function() {
-        // Populate customer dropdown
-        $.get("http://localhost:8085/customers/getnames", function(data) {
-          data.forEach(function(customer) {
-            $("#customerName").append(`<option>${customer.customerName}</option>`);
-          });
-        });
-      
-        // Populate product dropdown
-        $.get("http://localhost:8085/products/getproducts", function(data) {
-          data.forEach(function(product) {
-            $("#productName").append(`<option value="${product.productName}" data-price="${product.productPrice}">${product.productName}</option>`);
-          });
-        });
-      
-        // Add to Order button click event
-        $("#addToOrder").click(function() {
-          let productName = $("#productName").val();
-          let quantity = parseInt($("#quantity").val());
-          let unitPrice = parseFloat($("#productName option:selected").attr("data-price"));
-          let productTotal = quantity * unitPrice;
-      
-          // Add item to order summary table
-          $("#orderSummary").append(`
-            <tr>
-              <td>${productName}</td>
-              <td>${quantity}</td>
-              <td>${productTotal}</td>
-              <td><button class="btn btn-danger btn-sm deleteItem">Delete</button></td>
-            </tr>
-          `);
-      
-          // Clear input fields
-          $("#productName").val('');
-          $("#quantity").val('');
-        });
-      
-        // Delete item from order summary
-        $("#orderSummary").on("click", ".deleteItem", function() {
-          $(this).closest("tr").remove();
-        });
-      
-        // Submit Order button click event
-        $("#submitOrder").click(function() {
-          let customerName = $("#customerName").val();
-          let shipDate = $("#shipDate").val();
-          let totalAmount = calculateTotalAmount();
-      
-          let orderDetails = [];
-          $("#orderSummary tbody tr").each(function() {
-            let productName = $(this).find("td:eq(0)").text();
-            let quantity = parseInt($(this).find("td:eq(1)").text());
-            let unitPrice = parseFloat($(this).find("td:eq(2)").text());
-            let productTotal = parseFloat($(this).find("td:eq(3)").text());
-      
-            orderDetails.push({
-              "productId": productName,
-              "productQty": quantity,
-              "unitPrice": unitPrice,
-              "productTotal": productTotal
+        var productsData = [];
+
+        // Fetch customer names and populate the dropdown
+        $.get('http://localhost:8085/customers/getnames', function(data) {
+            data.forEach(function(customer) {
+                $('#customer-name').append(new Option(customer.customerName, customer.customerName));
             });
-          });
-      
-          // Prepare order data
-          let orderData = {
-            "customerID": customerName,
-            "shipDate": shipDate,
-            "totalAmount": totalAmount,
-            "orderDetails": orderDetails
-          };
-      
-          // POST request to submit order
-          $.ajax({
-            type: "POST",
-            url: "http://localhost:8085/orders/neworder",
-            contentType: "application/json",
-            data: JSON.stringify(orderData),
-            success: function(response) {
-              // Clear order summary table and inputs
-              $("#orderSummary tbody").empty();
-              $("#customerName").val('');
-              $("#shipDate").val('');
-            },
-            error: function(xhr, status, error) {
-              console.error("Error submitting order:", error);
-            }
-          });
         });
-      
-        // Function to calculate total amount of the order
-        function calculateTotalAmount() {
-          let total = 0;
-          $("#orderSummary tbody tr").each(function() {
-            total += parseFloat($(this).find("td:eq(3)").text());
-          });
-          return total;
-        }
-      });
-      
-        // Function to check if the user is logged in
-        function checkLoggedIn() {
-            // Retrieve username from session storage
-            var username = sessionStorage.getItem('username');
-            // If username is not found, redirect to login page
-            if (!username) {
-                window.location.href = 'index.html';
+
+        // Fetch product names and populate the dropdown
+        $.get('http://localhost:8085/products/getproducts', function(data) {
+            productsData = data; // Save the product data for reference
+            data.forEach(function(product) {
+                $('#product-name').append(new Option(product.productName, product.productName));
+            });
+        });
+
+        var orderDetails = [];
+        var overallTotal = 0;
+
+        // Update unit price when product is selected
+        $('#product-name').change(function() {
+            var selectedProductName = $(this).val();
+            var selectedProduct = productsData.find(product => product.productName === selectedProductName);
+            if (selectedProduct) {
+                $('#unit-price').val(selectedProduct.productPrice);
+            } else {
+                $('#unit-price').val('');
             }
+        });
+
+        // Add item to the order
+        $('#add-item').click(function() {
+            var productName = $('#product-name').val();
+            var productQty = $('#product-qty').val();
+            var unitPrice = $('#unit-price').val();
+
+            // Validate product selection and quantity
+            if (!productName || !productQty || productQty <= 0) {
+                alert('Please select a product and enter a valid quantity.');
+                return;
+            }
+
+            var productTotal = productQty * unitPrice;
+
+            var existingProduct = orderDetails.find(product => product.productName === productName);
+            if (existingProduct) {
+                existingProduct.productQty = parseInt(existingProduct.productQty) + parseInt(productQty);
+                existingProduct.productTotal = (existingProduct.productQty * existingProduct.unitPrice).toFixed(2);
+            } else {
+                orderDetails.push({
+                    productId: productName,
+                    productName: productName,
+                    productQty: productQty,
+                    unitPrice: unitPrice,
+                    productTotal: productTotal.toFixed(2)
+                });
+            }
+
+            updateOrderTable();
+
+            overallTotal += productTotal;
+            $('#overall-total').val('$' + overallTotal.toFixed(2));
+
+            $('#product-name').val('');
+            $('#product-qty').val('');
+            $('#unit-price').val('');
+        });
+
+        // Update order table
+        function updateOrderTable() {
+            var orderItemsTable = $('#order-items-table');
+            orderItemsTable.empty();
+            orderDetails.forEach(function(detail) {
+                orderItemsTable.append(
+                    '<tr>' +
+                    '<td>' + detail.productName + '</td>' +
+                    '<td>' + detail.productQty + '</td>' +
+                    '<td>$' + parseFloat(detail.unitPrice).toFixed(2) + '</td>' +
+                    '<td>$' + parseFloat(detail.productTotal).toFixed(2) + '</td>' +
+                    '<td><button type="button" class="btn btn-danger btn-sm delete-item" data-name="' + detail.productName + '">Delete</button></td>' +
+                    '</tr>'
+                );
+            });
         }
-    
-        // Call the function to check if the user is logged in
-        checkLoggedIn();
-    
+
+        // Delete item from order
+        $(document).on('click', '.delete-item', function() {
+            var productName = $(this).data('name');
+            var productIndex = orderDetails.findIndex(product => product.productName === productName);
+            if (productIndex !== -1) {
+                overallTotal -= parseFloat(orderDetails[productIndex].productTotal);
+                orderDetails.splice(productIndex, 1);
+                $('#overall-total').val('$' + overallTotal.toFixed(2));
+                updateOrderTable();
+            }
+        });
+
+        // Submit order
+        $('#submit-order').click(function() {
+            var customerID = $('#customer-name').val();
+            var shipDate = $('#shipping-date').val();
+            var paymentType = $('#payment-type').val();
+
+            // Validate customer selection, shipping date, and order items
+            if (!customerID || !shipDate || orderDetails.length === 0) {
+                alert('Please select a customer, shipping date, and add at least one item to the order.');
+                return;
+            }
+
+            var orderData = {
+                customerID: customerID,
+                shipDate: shipDate,
+                totalAmount: overallTotal.toFixed(2),
+                orderStatus: 'pending',
+                orderDetails: orderDetails,
+                paymentType: paymentType
+            };
+
+            $.ajax({
+                url: 'http://localhost:8085/orders/neworder',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(orderData),
+                success: function(response) {
+                    var orderId = response; // Assuming the response is the order ID as a string
+                    var username = sessionStorage.getItem('username');
+                    window.open('http://localhost:8085/orders/generatePDF/' + orderId + '/' + username, '_blank');
+                    window.location.href = 'add-order.html';
+                },
+                error: function(error) {
+                    alert('Failed to submit order');
+                }
+            });
+        });
+    });
+</script>
+    <script>
+      function checkLoggedIn() {
         // Retrieve username from session storage
         var username = sessionStorage.getItem('username');
-    
-        // Display welcome message
-        var holder = document.getElementById('usernamePlaceholder');
-        if (username) {
-            holder.textContent = username;
-        } else {
-            // If username is not found in session storage, redirect to login page
+        // If username is not found, redirect to login page
+        if (!username) {
             window.location.href = 'index.html';
         }
-    
-        // Add event listener for logout link
-        document.getElementById('logoutLink').addEventListener('click', function() {
-            // Clear session storage
-            sessionStorage.removeItem('username');
-            // Redirect to login page
-            window.location.href = 'index.html';
-        });
+    }
+  
+    // Call the function to check if the user is logged in
+    checkLoggedIn();
+  
+    // Retrieve username from session storage
+    var username = sessionStorage.getItem('username');
+  
+    // Display welcome message
+    var holder = document.getElementById('usernamePlaceholder');
+    if (username) {
+        holder.textContent = username;
+    } else {
+        // If username is not found in session storage, redirect to login page
+        window.location.href = 'index.html';
+    }
+  
+    // Add event listener for logout link
+    document.getElementById('logoutLink').addEventListener('click', function() {
+        // Clear session storage
+        sessionStorage.removeItem('username');
+        // Redirect to login page
+        window.location.href = 'index.html';
+    });
     </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-      
-
-
-
-  </script>
 </body>
 </html>

@@ -43,7 +43,7 @@ public class OrderDAO {
 	 
 
 public String save(Order newOrder) {
-    String insertSql = "INSERT INTO orders (order_date, customer_id, ship_date, total_amount, order_status) VALUES (?, ?, ?, ?,?)";
+    String insertSql = "INSERT INTO orders (order_date, customer_id, ship_date, total_amount, order_status, payment_type) VALUES (?,?, ?, ?, ?,?)";
     String insertDetailSql = "INSERT INTO orderdetails (order_id, product_name, product_qty, product_unitprice, product_total) VALUES (?, ?, ?, ?, ?)";
     String updateProductSql = "UPDATE products SET product_qty = product_qty - ? WHERE product_name = ?";
     
@@ -52,7 +52,7 @@ public String save(Order newOrder) {
         jdbcTemplate.execute("START TRANSACTION");
 
         // Insert the order
-        jdbcTemplate.update(insertSql, formattedDateTime, newOrder.getCustomerID(), newOrder.getShipDate(), newOrder.getTotalAmount(), newOrder.getOrderStatus());
+        jdbcTemplate.update(insertSql, formattedDateTime, newOrder.getCustomerID(), newOrder.getShipDate(), newOrder.getTotalAmount(), newOrder.getOrderStatus(), newOrder.getPaymentType());
 
         // Get the ID of the inserted order
         int orderId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -66,7 +66,7 @@ public String save(Order newOrder) {
         // Commit the transaction
         jdbcTemplate.execute("COMMIT");
 
-        return "Success";
+        return String.valueOf(orderId);
     } catch(Exception ex) {
         
         jdbcTemplate.execute("ROLLBACK");
@@ -249,8 +249,12 @@ public String save(Order newOrder) {
 	            // Add order details
 	            document.add(new Paragraph("	     	      	      "));
 	            document.add(new Paragraph("	     	      	      "));
+	            document.add(new Paragraph("Payment Method: "+ order.getPaymentType()));
+	           
 	            
+	            // display the dashed line for signature
 	            document.add(signature);
+	            //display the username 
 	            document.add(userpara);
 	            document.add(new Paragraph("	     	      	      "));
 	            

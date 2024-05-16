@@ -10,7 +10,16 @@ public class Order {
     private String shipDate;
     private double totalAmount;
     private String orderStatus;
-    private List<OrderDetail> orderDetails;
+    private String paymentType;
+    public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	private List<OrderDetail> orderDetails;
 
  
     public String getOrderStatus() {

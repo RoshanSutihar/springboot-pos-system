@@ -46,7 +46,7 @@ public class OrderController {
 	    if (orderId.equals("Error")) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unable to save the order");
 	    } else {
-	        return ResponseEntity.ok().body("success" );
+	        return ResponseEntity.ok().body(orderId);
 	    }
 	}
 	
