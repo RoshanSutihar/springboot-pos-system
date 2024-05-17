@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content ="width=device-width, initial-scale = 1.0">
+        <title>Update Product</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" >
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .card-title{
+                font-size: 1.2rem;
+            }
+            .card-value{
+                font-size: 2rem;
+                font-weight: bold;
+
+            }
+        </style>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="dashboard.html">Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Orders</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                    <a class="dropdown-item" href="add-order.html">Add Order</a>
+                    <a class="dropdown-item" href="view-orders.html">View Order</a>
+                    <a class="dropdown-item" href="fetchorder.html">Search Order</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <a class="dropdown-item" href="add-product.html">Add Product</a>
+                    <a class="dropdown-item" href="view-products.html">View Products<span class="sr-only">(current)</span></a>
+                    <a class="dropdown-item" href="add-category.html">Add Category</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Suppliers</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+                    <a class="dropdown-item" href="add-supplier.html">Add Supplier</a>
+                    <a class="dropdown-item" href="view-suppliers.html">View Suppliers</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Customers</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
+                    <a class="dropdown-item" href="add-customer.html">Add Customer</a>
+                    <a class="dropdown-item" href="view-customers.html">View Customers</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="register-user.html">Register User</a>
+                </li>
+              </ul>
+            </div>
+            <div class="navbar-nav ml-auto">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" id="logoutLink">Logout: <span id="usernamePlaceholder"></a></span>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="container mt-5">
+            <h2>Update Product</h2>
+            <form id="updateProductForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="productNameInput">Product Name:</label>
+                        <input type="text" class="form-control" id="productNameInput" name="productName">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="productDescInput">Description:</label>
+                        <textarea class="form-control" id="productDescInput" name="productDesc"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="productQtyInput">Quantity:</label>
+                        <input type="number" class="form-control" id="productQtyInput" name="productQty">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="productPriceInput">Price:</label>
+                        <input type="text" class="form-control" id="productPriceInput" name="productPrice">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="supplierIdInput">Supplier:</label>
+                        <select class="form-control" id="supplierIdInput" name="supplierId">
+                            <!-- Supplier options will be loaded here -->
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="categoryIdInput">Category:</label>
+                        <select class="form-control" id="categoryIdInput" name="categoryId">
+                            <!-- Category options will be loaded here -->
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Product</button>
+            </form>
+        </div>
+    
+        <script>
+            $(document).ready(function() {
+                // Retrieve productId from URL query parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const productId = urlParams.get('productId');
+        
+                // Fetch product details using the productId
+                fetchProductDetails(productId);
+    
+                // Handle form submission
+                $('#updateProductForm').submit(function(event) {
+                    event.preventDefault();
+    
+                    // Get form data
+                    const formData = {
+                        productName: $('#productNameInput').val(),
+                        productDesc: $('#productDescInput').val(),
+                        productQty: $('#productQtyInput').val(),
+                        productPrice: $('#productPriceInput').val(),
+                        supplierId: $('#supplierIdInput').val(),
+                        categoryId: $('#categoryIdInput').val()
+                    };
+    
+                    // Submit updated product data
+                    $.ajax({
+                        url: `http://localhost:8085/products/updateProduct/${productId}`,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(formData),
+                        success: function(response) {
+                            alert('Product updated successfully!');
+                            window.location.href = 'view-products.html'; // Redirect after successful update
+                        },
+                        error: function(xhr) {
+                            alert('Error updating product: ' + xhr.responseText);
+                        }
+                    });
+                });
+    
+                loadSuppliers();
+                loadCategories();
+            });
+    
+            function fetchProductDetails(productId) {
+                $.ajax({
+                    url: `http://localhost:8085/products/getProduct/${productId}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(product) {
+                        $('#productNameInput').val(product.productName);
+                        $('#productDescInput').val(product.productDesc);
+                        $('#productQtyInput').val(product.productQty);
+                        $('#productPriceInput').val(product.productPrice);
+                        $('#supplierIdInput').val(product.supplierId);
+                        $('#categoryIdInput').val(product.categoryId);
+                    },
+                    error: function() {
+                        alert('Failed to retrieve product details.');
+                    }
+                });
+            }
+    
+            function loadSuppliers() {
+                // Load suppliers from the server and populate the select dropdown
+                $.ajax({
+                    url: 'http://localhost:8085/suppliers/getalldetails',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(suppliers) {
+                        suppliers.forEach(function(supplier) {
+                            $('#supplierIdInput').append(new Option(supplier.supplierName, supplier.supplierId));
+                        });
+                    }
+                });
+            }
+    
+            function loadCategories() {
+                // Load categories from the server and populate the select dropdown
+                $.ajax({
+                    url: 'http://localhost:8085/products/getcategories',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(categories) {
+                        categories.forEach(function(category) {
+                            $('#categoryIdInput').append(new Option(category.categoryName, category.categoryName));
+                        });
+                    }
+                });
+            }
+        </script>
+
+
+
+          <script>
+            // Function to check if the user is logged in
+            function checkLoggedIn() {
+                // Retrieve username from session storage
+                var username = sessionStorage.getItem('username');
+                // If username is not found, redirect to login page
+                if (!username) {
+                    window.location.href = 'index.html';
+                }
+            }
+          
+            // Call the function to check if the user is logged in
+            checkLoggedIn();
+          
+            // Retrieve username from session storage
+            var username = sessionStorage.getItem('username');
+          
+            // Display welcome message
+            var holder = document.getElementById('usernamePlaceholder');
+            if (username) {
+                holder.textContent = username;
+            } else {
+                // If username is not found in session storage, redirect to login page
+                window.location.href = 'index.html';
+            }
+          
+            // Add event listener for logout link
+            document.getElementById('logoutLink').addEventListener('click', function() {
+                // Clear session storage
+                sessionStorage.removeItem('username');
+                // Redirect to login page
+                window.location.href = 'index.html';
+            });
+          </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
