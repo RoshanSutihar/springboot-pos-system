@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product</title>
+  <title>Low Stock</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -20,6 +21,7 @@
   </style>
 </head>
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
      
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +38,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
                     <a class="dropdown-item" href="add-order.html">Add Order</a>
-                    <a class="dropdown-item" href="view-orders">View Orders</a>
+                    <a class="dropdown-item" href="view-orders.html">View Orders</a>
                     <a class="dropdown-item" href="fetchorder.html">Search Order</a>
                 </div>
             </li>
@@ -45,10 +47,10 @@
                 Products
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                <a class="dropdown-item" href="add-product.html">Add Product<span class="sr-only">(current)</span></a>
+                <a class="dropdown-item" href="add-product.html">Add Product</a>
                 <a class="dropdown-item" href="view-products.html">View Products</a>
                 <a class="dropdown-item" href="add-category.html">Add Category</a>
-                <a class="dropdown-item" href="low-stock.html">Low Stock</a>
+                <a class="dropdown-item" href="low-stock.html">Low Stock<span class="sr-only">(current)</span></a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -93,96 +95,76 @@
       </nav>
 
       <div class="container mt-5">
-        <h2>Add New Product</h2>
-        <form id="addProductForm">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="productName">Product Name:</label>
-                    <input type="text" class="form-control" id="productName" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="productDesc">Product Description:</label>
-                    <input type="text" class="form-control" id="productDesc" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="productQty">Quantity:</label>
-                    <input type="number" class="form-control" id="productQty" required>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="productPrice">Price:</label>
-                    <input type="number" class="form-control" id="productPrice" step="0.01" required>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="supplierSelect">Select Supplier:</label>
-                    <select class="form-control" id="supplierSelect" required>
-                        <option value="">Choose...</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="categorySelect">Categories:</label>
-                    <select class="form-control" id="categorySelect" required>
-                        <option value="">Choose...</option>
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Product</button>
-        </form>
-    </div>
-
-    <script>
+        <h2>Low Stock Products</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Current Stock</th>
+              <th>Restock Quantity</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="lowStockTable">
+            <!-- Items will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+      
+      <script>
         $(document).ready(function() {
-            fetchSuppliers();
-            fetchCategories();
-
-            $('#addProductForm').submit(function(event) {
-                event.preventDefault();
-                submitProductForm();
-            });
+          fetchLowStockProducts();
+      
+          $(document).on('click', '.restockBtn', function() {
+            const productId = $(this).data('id');
+            const qty = $(`#qty-${productId}`).val();
+            if (qty > 0) {
+              restockProduct(productId, qty);
+            } else {
+              alert('Please enter a valid quantity.');
+            }
+          });
         });
-
-        function fetchSuppliers() {
-            $.get('http://localhost:8085/suppliers/getalldetails', function(data) {
-                data.forEach(function(supplier) {
-                    $('#supplierSelect').append(new Option(supplier.supplierName, supplier.supplierId));
-                });
-            });
+      
+        function fetchLowStockProducts() {
+          $.ajax({
+            url: 'http://localhost:8085/products/getlowproducts',
+            type: 'GET',
+            success: function(data) {
+              let rows = '';
+              data.forEach(product => {
+                rows += `<tr>
+                  <td>${product.productName}</td>
+                  <td>${product.productDesc}</td>
+                  <td>${product.productQty}</td>
+                  <td><input type="number" id="qty-${product.productId}" class="form-control" value="0" min="1"></td>
+                  <td><button class="btn btn-primary restockBtn" data-id="${product.productId}">Restock</button></td>
+                </tr>`;
+              });
+              $('#lowStockTable').html(rows);
+            },
+            error: function() {
+              alert('Failed to retrieve products.');
+            }
+          });
         }
-
-        function fetchCategories() {
-            $.get('http://localhost:8085/products/getcategories', function(data) {
-                data.forEach(function(category) {
-                    $('#categorySelect').append(new Option(category.categoryName, category.categoryName));
-                });
-            });
+      
+        function restockProduct(productId, qty) {
+          $.ajax({
+            url: `http://localhost:8085/products/${productId}/restock/${qty}`,
+            type: 'POST',
+            success: function(response) {
+              alert('Item restocked successfully');
+              fetchLowStockProducts();
+            },
+            error: function(xhr) {
+              alert(`Error restocking product: ${xhr.responseText}`);
+            }
+          });
         }
-
-        function submitProductForm() {
-            var productData = {
-                productName: $('#productName').val(),
-                productDesc: $('#productDesc').val(),
-                productQty: $('#productQty').val(),
-                productPrice: $('#productPrice').val(),
-                supplierId: $('#supplierSelect').val(),
-                categoryId: $('#categorySelect').val()
-            };
-
-            $.ajax({
-                url: 'http://localhost:8085/products/newproduct',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(productData),
-                success: function(response) {
-                    alert('Product added successfully!');
-                    window.location.reload();
-                },
-                error: function(error) {
-                    alert('Error adding product: ' + error.responseText);
-                }
-            });
-        }
-    </script>
+      </script>
+      
 
       <script>
         // Function to check if the user is logged in
@@ -220,5 +202,5 @@
     </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    
 </body>
+</html>

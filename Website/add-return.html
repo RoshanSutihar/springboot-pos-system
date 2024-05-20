@@ -1,9 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product</title>
+  <title>Add Return</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -20,6 +22,7 @@
   </style>
 </head>
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
      
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +39,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
                     <a class="dropdown-item" href="add-order.html">Add Order</a>
-                    <a class="dropdown-item" href="view-orders">View Orders</a>
+                    <a class="dropdown-item" href="view-orders.html">View Orders</a>
                     <a class="dropdown-item" href="fetchorder.html">Search Order</a>
                 </div>
             </li>
@@ -45,7 +48,7 @@
                 Products
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                <a class="dropdown-item" href="add-product.html">Add Product<span class="sr-only">(current)</span></a>
+                <a class="dropdown-item" href="add-product.html">Add Product</a>
                 <a class="dropdown-item" href="view-products.html">View Products</a>
                 <a class="dropdown-item" href="add-category.html">Add Category</a>
                 <a class="dropdown-item" href="low-stock.html">Low Stock</a>
@@ -70,13 +73,13 @@
               </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Returns
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
-                  <a class="dropdown-item" href="add-return.html">Add Return</a>
-                </div>
-              </li>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Returns
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
+                <a class="dropdown-item" href="add-return.html">Add Return<span class="sr-only">(current)</span></a>
+              </div>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="register-user.html">Register User</a>
             </li>
@@ -93,96 +96,59 @@
       </nav>
 
       <div class="container mt-5">
-        <h2>Add New Product</h2>
-        <form id="addProductForm">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="productName">Product Name:</label>
-                    <input type="text" class="form-control" id="productName" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="productDesc">Product Description:</label>
-                    <input type="text" class="form-control" id="productDesc" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="productQty">Quantity:</label>
-                    <input type="number" class="form-control" id="productQty" required>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="productPrice">Price:</label>
-                    <input type="number" class="form-control" id="productPrice" step="0.01" required>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="supplierSelect">Select Supplier:</label>
-                    <select class="form-control" id="supplierSelect" required>
-                        <option value="">Choose...</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="categorySelect">Categories:</label>
-                    <select class="form-control" id="categorySelect" required>
-                        <option value="">Choose...</option>
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Product</button>
+        <h2>Add Return</h2>
+        <form id="addReturnForm">
+          <div class="form-group">
+            <label for="orderId">Order ID:</label>
+            <input type="number" class="form-control" id="orderId" required>
+          </div>
+          <div class="form-group">
+            <label for="productName">Product Name:</label>
+            <input type="text" class="form-control" id="productName" required>
+          </div>
+          <div class="form-group">
+            <label for="qtyReturned">Quantity Returned:</label>
+            <input type="number" class="form-control" id="qtyReturned" required>
+          </div>
+          <div class="form-group">
+            <label for="returnReason">Return Reason:</label>
+            <input type="text" class="form-control" id="returnReason" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    </div>
-
-    <script>
+        <div id="error" class="alert alert-danger mt-2" style="display: none;"></div>
+      </div>
+    
+      <script>
         $(document).ready(function() {
-            fetchSuppliers();
-            fetchCategories();
-
-            $('#addProductForm').submit(function(event) {
-                event.preventDefault();
-                submitProductForm();
-            });
+          $('#addReturnForm').submit(function(event) {
+            event.preventDefault();
+            submitReturnForm();
+          });
         });
-
-        function fetchSuppliers() {
-            $.get('http://localhost:8085/suppliers/getalldetails', function(data) {
-                data.forEach(function(supplier) {
-                    $('#supplierSelect').append(new Option(supplier.supplierName, supplier.supplierId));
-                });
-            });
+    
+        function submitReturnForm() {
+          var returnData = {
+            orderId: $('#orderId').val(),
+            productName: $('#productName').val(),
+            qtyReturned: $('#qtyReturned').val(),
+            returnReason: $('#returnReason').val()
+          };
+    
+          $.ajax({
+            url: 'http://localhost:8085/returns/newreturn',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(returnData),
+            success: function(response) {
+              alert('Return added successfully!');
+            },
+            error: function(response) {
+              $('#error').show().text('Error: ' + response.responseText);
+            }
+          });
         }
-
-        function fetchCategories() {
-            $.get('http://localhost:8085/products/getcategories', function(data) {
-                data.forEach(function(category) {
-                    $('#categorySelect').append(new Option(category.categoryName, category.categoryName));
-                });
-            });
-        }
-
-        function submitProductForm() {
-            var productData = {
-                productName: $('#productName').val(),
-                productDesc: $('#productDesc').val(),
-                productQty: $('#productQty').val(),
-                productPrice: $('#productPrice').val(),
-                supplierId: $('#supplierSelect').val(),
-                categoryId: $('#categorySelect').val()
-            };
-
-            $.ajax({
-                url: 'http://localhost:8085/products/newproduct',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(productData),
-                success: function(response) {
-                    alert('Product added successfully!');
-                    window.location.reload();
-                },
-                error: function(error) {
-                    alert('Error adding product: ' + error.responseText);
-                }
-            });
-        }
-    </script>
+      </script>
 
       <script>
         // Function to check if the user is logged in
@@ -220,5 +186,5 @@
     </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    
 </body>
+</html>
