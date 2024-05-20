@@ -266,7 +266,8 @@ public String save(Order newOrder) {
 	           
 	            document.add(toc);
 	            document.add(new Paragraph("1) Returns must be presented within 15 days of Invoice Date."));
-	            document.add(new Paragraph("2) E&OE"));
+	            document.add(new Paragraph("2) Tax is included in all product unit price."));
+	            document.add(new Paragraph("3) E&OE"));
 	            
 	            document.close();
 

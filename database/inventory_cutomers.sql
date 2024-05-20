@@ -38,7 +38,7 @@ CREATE TABLE `cutomers` (
 
 LOCK TABLES `cutomers` WRITE;
 /*!40000 ALTER TABLE `cutomers` DISABLE KEYS */;
-INSERT INTO `cutomers` VALUES (1,'John Doe','555-1234','123 Main St','john.doe3@example.com'),(3,'Alice Smith','555-5678','456 Elm St','alice.smith@example.com'),(4,'Bob Johnson','555-9012','789 Oak St','bob.johnson1@example.com'),(7,'Sophia Brown','555-2345','303 Birch St','sophia.brown@example.com'),(8,'Jacob Miller','555-6789','404 Cedar St','jacob.miller@example.com'),(9,'Isabella Gonzales','555-78901','909 Elm St','isabella.gonzales@example.com'),(10,'William Hernandez','555-34536','808 Oak St','william.hernandez@example.com'),(11,'James Lopez','555-23345','1010 Cedar St','james.lopez@example.com'),(12,'Ava Perez','555-67869','1111 Birch St','ava.perez@example.com'),(13,'Logan Reyes','555-12324','1212 Maple St','logan.reyes@example.com'),(14,'Bob Johnson test','55590129183','789 Oak St ','bob.johnson1@ample.com');
+INSERT INTO `cutomers` VALUES (1,'John Doe','555-1234','123 Main St','john.doe5@example.com'),(3,'Alice Smith','555-5678','456 Elm St','alice.smith1@example.com'),(4,'Bob Johnson','555-9012','789 Oak St','bob.johnson1@example.com'),(7,'Sophia Brown','555-2345','303 Birch St','sophia.brown@example.com'),(8,'Jacob Miller','555-6789','404 Cedar St','jacob.miller@example.com'),(9,'Isabella Gonzales','555-78901','909 Elm St','isabella.gonzales@example.com'),(10,'William Hernandez','555-34536','808 Oak St','william.hernandez@example.com'),(11,'James Lopez','555-23345','1010 Cedar St','james.lopez@example.com'),(12,'Ava Perez','555-67869','1111 Birch St','ava.perez@example.com'),(13,'Logan Reyes','555-12324','1212 Maple St','logan.reyes@example.com'),(14,'Bob Johnson test','55590129183','789 Oak St ','bob.johnson1@ample.com');
 /*!40000 ALTER TABLE `cutomers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-15 12:36:29
+-- Dump completed on 2024-05-20 13:32:39
