@@ -56,6 +56,11 @@ public class ProductController {
 		
 	}
 	
+	@GetMapping("/getProduct/{proid}")
+    public List<Product> getProduct(@PathVariable int proid) {
+        return proDao.getProduct(proid);
+    }
+	
 	@GetMapping("/getproducts")
     public List<Product> getAllProducts() {
         return proDao.getAllProducts();
@@ -65,6 +70,7 @@ public class ProductController {
     public List<Product> getLowProducts() {
         return proDao.getLowProducts();
     }
+	
 	
 	@PostMapping("/addcategory")
 	public ResponseEntity<String> createCategory(@RequestBody  Category newcategory) {
@@ -114,4 +120,25 @@ public class ProductController {
 
         return ResponseEntity.ok().body("Item restocked successfully");
     }
+	
+	
+	@PostMapping("/updateproduct")
+	public ResponseEntity<String> updateProduct(@RequestBody  Product newproduct) {
+		
+		if(newproduct.getProductDesc().isBlank()|| newproduct.getProductPrice()==0 || newproduct.getProductId()==0
+				|| newproduct.getSupplierId() .isBlank()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Some fields missing please check");
+			}
+			
+			String key = proDao.update(newproduct);
+	        if (key.equals("Product update failed.")) {
+	        	
+	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Failure");
+	        } else if (key.equals("Error")) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Can not generate key");
+	        }
+	        return ResponseEntity.ok().body("success");
+		
+		
+	}
 }

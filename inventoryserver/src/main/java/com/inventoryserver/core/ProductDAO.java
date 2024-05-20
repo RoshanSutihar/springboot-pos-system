@@ -39,11 +39,38 @@ public class ProductDAO {
 	 
 	 
 	 
+	 
+	 public String update(Product newProduct) {
+	        String sql = "UPDATE products SET product_price = ?, product_desc = ? , product_supp =? WHERE product_id = ?";
+	        int rowsAffected = jdbcTemplate.update(
+	            sql, 
+	            newProduct.getProductPrice(), 
+	            newProduct.getProductDesc(), 
+	            newProduct.getSupplierId(),
+	            newProduct.getProductId()
+	        );
+
+	        if (rowsAffected > 0) {
+	            return "Product updated successfully.";
+	        } else {
+	            return "Product update failed.";
+	        }
+	    }
+	 
+	 
 	 public List<Product> getAllProducts() {
 			
 		 String sql = "SELECT * FROM products";
 	        RowMapper<Product> rowMapper = new ProductRowMapper();
 	        return jdbcTemplate.query(sql, rowMapper);
+	 }
+	 
+	 
+	 public List<Product> getProduct(int productId) {
+			
+		 String sql = "SELECT * FROM products WHERE product_id = ?";
+	        RowMapper<Product> rowMapper = new ProductRowMapper();
+	        return jdbcTemplate.query(sql, rowMapper,  productId);
 	 }
 	 
 	 public List<Product> getLowProducts() {
