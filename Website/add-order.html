@@ -71,7 +71,7 @@
   <div class="container mt-5">
  
 
-    <!-- Section 1: Select Customer and Shipping Date -->
+   
     <div class="section">
         <h3>Select Customer and Shipping Date</h3>
         <form id="customer-form">
@@ -88,7 +88,7 @@
         </form>
     </div>
 
-    <!-- Section 2: Add Items -->
+
     <div class="section">
         <h3>Add Items</h3>
         <form id="items-form">
@@ -128,11 +128,12 @@
         </div>
     </div>
 
-    <!-- Section 3: Select Payment Type -->
+  
     <div class="section">
         <h3>Select Payment Type</h3>
         <form id="payment-form">
             <div class="form-group">
+                
                 <label for="payment-type">Payment Type:</label>
                 <select id="payment-type" class="form-control">
                     <option value="credit-card">Credit Card</option>
@@ -151,16 +152,16 @@
     $(document).ready(function() {
         var productsData = [];
 
-        // Fetch customer names and populate the dropdown
+       
         $.get('http://localhost:8085/customers/getnames', function(data) {
             data.forEach(function(customer) {
                 $('#customer-name').append(new Option(customer.customerName, customer.customerName));
             });
         });
 
-        // Fetch product names and populate the dropdown
+ 
         $.get('http://localhost:8085/products/getproducts', function(data) {
-            productsData = data; // Save the product data for reference
+            productsData = data;
             data.forEach(function(product) {
                 $('#product-name').append(new Option(product.productName, product.productName));
             });
@@ -169,7 +170,7 @@
         var orderDetails = [];
         var overallTotal = 0;
 
-        // Update unit price when product is selected
+       
         $('#product-name').change(function() {
             var selectedProductName = $(this).val();
             var selectedProduct = productsData.find(product => product.productName === selectedProductName);
@@ -180,13 +181,13 @@
             }
         });
 
-        // Add item to the order
+       
         $('#add-item').click(function() {
             var productName = $('#product-name').val();
             var productQty = $('#product-qty').val();
             var unitPrice = $('#unit-price').val();
 
-            // Validate product selection and quantity
+           
             if (!productName || !productQty || productQty <= 0) {
                 alert('Please select a product and enter a valid quantity.');
                 return;
@@ -218,7 +219,7 @@
             $('#unit-price').val('');
         });
 
-        // Update order table
+      
         function updateOrderTable() {
             var orderItemsTable = $('#order-items-table');
             orderItemsTable.empty();
@@ -235,7 +236,7 @@
             });
         }
 
-        // Delete item from order
+       
         $(document).on('click', '.delete-item', function() {
             var productName = $(this).data('name');
             var productIndex = orderDetails.findIndex(product => product.productName === productName);
@@ -247,13 +248,13 @@
             }
         });
 
-        // Submit order
+       
         $('#submit-order').click(function() {
             var customerID = $('#customer-name').val();
             var shipDate = $('#shipping-date').val();
             var paymentType = $('#payment-type').val();
 
-            // Validate customer selection, shipping date, and order items
+            
             if (!customerID || !shipDate || orderDetails.length === 0) {
                 alert('Please select a customer, shipping date, and add at least one item to the order.');
                 return;
@@ -274,7 +275,7 @@
                 contentType: 'application/json',
                 data: JSON.stringify(orderData),
                 success: function(response) {
-                    var orderId = response; // Assuming the response is the order ID as a string
+                    var orderId = response; 
                     var username = sessionStorage.getItem('username');
                     window.open('http://localhost:8085/orders/generatePDF/' + orderId + '/' + username, '_blank');
                     window.location.href = 'add-order.html';
@@ -288,34 +289,32 @@
 </script>
     <script>
       function checkLoggedIn() {
-        // Retrieve username from session storage
+ 
         var username = sessionStorage.getItem('username');
-        // If username is not found, redirect to login page
+        
         if (!username) {
             window.location.href = 'index.html';
         }
     }
   
-    // Call the function to check if the user is logged in
+
     checkLoggedIn();
   
-    // Retrieve username from session storage
     var username = sessionStorage.getItem('username');
   
-    // Display welcome message
     var holder = document.getElementById('usernamePlaceholder');
     if (username) {
         holder.textContent = username;
     } else {
-        // If username is not found in session storage, redirect to login page
+       
         window.location.href = 'index.html';
     }
   
-    // Add event listener for logout link
+  
     document.getElementById('logoutLink').addEventListener('click', function() {
-        // Clear session storage
+        
         sessionStorage.removeItem('username');
-        // Redirect to login page
+       
         window.location.href = 'index.html';
     });
     </script>
