@@ -93,6 +93,86 @@
       </div>
       </nav>
 
+      <div class="container mt-5">
+        <h2>Order Details</h2>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer Name</th>
+              <th>Order Date</th>
+              <th>Ship Date</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+              <th>Invoice</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTable">
+            <!-- Data will be populated here via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+  
+      <script>
+        $(document).ready(function() {
+          fetchOrders();
+        });
+  
+        function fetchOrders() {
+          $.ajax({
+            url: 'http://localhost:8085/orders/getallorders',
+            type: 'GET',
+            dataType: 'json',
+            success: function(orders) {
+              var rows = '';
+              orders.forEach(function(order) {
+                var button = '';
+                if (order.orderStatus === 'pending') {
+                  button = '<button class="btn btn-primary" onclick="markComplete('+order.orderID+')">Mark Complete</button>';
+                } else if (order.orderStatus === 'complete') {
+                  button = '<button class="btn btn-success" onclick="markDelivered('+order.orderID+')">Mark Delivered</button>';
+                } else {
+                  button = '<button class="btn btn-secondary disabled">No Action</button>';
+                }
+                rows += `<tr>
+                          <td>${order.orderID}</td>
+                          <td>${order.customerID}</td>
+                          <td>${order.orderDate}</td>
+                          <td>${order.shipDate}</td>
+                          <td>$${order.totalAmount.toFixed(2)}</td>
+                          <td>${order.orderStatus}</td>
+                          <td>${button}</td>
+                          <td><button class="btn btn-info" onclick="printInvoice(${order.orderID}, '${order.customerID}')">Print</button></td>
+                        </tr>`;
+              });
+              $('#ordersTable').html(rows);
+            },
+            error: function() {
+              alert('Error retrieving orders.');
+            }
+          });
+        }
+  
+        function markComplete(orderID) {
+          $.post('http://localhost:8085/orders/markcomplete/' + orderID, function(response) {
+            alert(response);
+            fetchOrders();
+          });
+        }
+  
+        function markDelivered(orderID) {
+          $.post('http://localhost:8085/orders/markdelivered/' + orderID, function(response) {
+            alert(response);
+            fetchOrders();
+          });
+        }
+  
+        function printInvoice(orderID, customerID) {
+          window.open(`print-invoice.html?orderID=${orderID}&customerID=${customerID}`, '_blank');
+        }
+      </script>
+
       <script>
         // Function to check if the user is logged in
         function checkLoggedIn() {
