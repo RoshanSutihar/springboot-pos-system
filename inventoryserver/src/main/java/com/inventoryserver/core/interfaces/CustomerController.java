@@ -74,6 +74,10 @@ public class CustomerController {
 	        return cusDao.getTotalCustomerCount();
 	    }
 	 
+	 @GetMapping("/validateCustomer/{number}")
+	 public String validateCustomer(@PathVariable int number) {
+	     return cusDao.validateDetails(number);
+	 }
 	 
 	 @GetMapping("/getnames")
 	    public List<CustomerDTO> getAllCustomers() {

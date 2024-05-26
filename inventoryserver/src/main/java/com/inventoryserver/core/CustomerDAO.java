@@ -45,6 +45,19 @@ public class CustomerDAO {
 		}
 	 
 	 
+	 
+	 public String validateDetails(int number) {
+		 String sql = "SELECT cus_name FROM customers WHERE cus_phone = ?";
+	        try {
+	            return jdbcTemplate.queryForObject(sql,  String.class);
+	        } catch (Exception ex) {
+	            return "Error";
+	        }
+	 }
+		 
+	 
+	 
+	 
 	 public String update(Customer updatedCustomer, int number) {
 		    String updateSQL = "UPDATE cutomers SET cus_name=?, cus_add=?, cus_email=?, cus_phone=? WHERE cus_id=?";
 		    

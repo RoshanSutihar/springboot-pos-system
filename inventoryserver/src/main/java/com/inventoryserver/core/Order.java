@@ -11,7 +11,17 @@ public class Order {
     private double totalAmount;
     private String orderStatus;
     private String paymentType;
-    public String getPaymentType() {
+    private String origin;
+    
+    public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	public String getPaymentType() {
 		return paymentType;
 	}
 

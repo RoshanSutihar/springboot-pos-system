@@ -99,12 +99,14 @@
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Customer Name</th>
+              <th>Customer</th>
               <th>Order Date</th>
               <th>Ship Date</th>
               <th>Total Amount</th>
+              <th>Origin</th>
               <th>Status</th>
-              <th>Action</th>
+              
+              <th>Action/Mark</th>
               <th>Invoice</th>
             </tr>
           </thead>
@@ -129,9 +131,9 @@
               orders.forEach(function(order) {
                 var button = '';
                 if (order.orderStatus === 'pending') {
-                  button = '<button class="btn btn-primary" onclick="markComplete('+order.orderID+')">Mark Complete</button>';
+                  button = '<button class="btn btn-primary" onclick="markComplete('+order.orderID+')">Complete</button>';
                 } else if (order.orderStatus === 'complete') {
-                  button = '<button class="btn btn-success" onclick="markDelivered('+order.orderID+')">Mark Delivered</button>';
+                  button = '<button class="btn btn-success" onclick="markDelivered('+order.orderID+')">Delivered</button>';
                 } else {
                   button = '<button class="btn btn-secondary disabled">No Action</button>';
                 }
@@ -141,6 +143,7 @@
                           <td>${order.orderDate}</td>
                           <td>${order.shipDate}</td>
                           <td>$${order.totalAmount.toFixed(2)}</td>
+                          <td>${order.origin}</td>
                           <td>${order.orderStatus}</td>
                           <td>${button}</td>
                           <td><button class="btn btn-info" onclick="printInvoice(${order.orderID}, '${order.customerID}')">Print</button></td>

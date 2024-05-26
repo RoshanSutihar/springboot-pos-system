@@ -30,9 +30,10 @@ CREATE TABLE `orders` (
   `order_status` varchar(45) DEFAULT NULL,
   `order_date` varchar(45) DEFAULT NULL,
   `ship_date` varchar(45) DEFAULT NULL,
+  `order_origin` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `order_id_UNIQUE` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (4,'456',100,NULL,NULL,'2024-05-10','2024-05-10'),(5,'1',100,NULL,NULL,'2024-05-10','2024-05-10'),(6,'2',100,NULL,NULL,'2024-05-10','2024-05-10'),(8,'3',100,NULL,NULL,'2024-05-10','2024-05-10'),(9,'Gita',100,NULL,NULL,'2024-05-10','2024-05-10'),(10,'Gita',100,NULL,NULL,'2024-05-10','2024-05-10'),(11,'Gita',100,NULL,NULL,'2024-05-10','2024-05-10'),(12,'Alice Smith',93.6,NULL,NULL,'2024-05-12','2024-05-23'),(14,'Roshan Sutihar',100,NULL,'complete','2024-05-15','2024-05-20'),(15,'John Doe',1677.98,NULL,'pending','2024-05-15','2024-05-28'),(16,'John Doe',78,NULL,'pending','2024-05-16','2024-05-17'),(17,'Roshan Sutihar',100,NULL,'pending','2024-05-16','2024-05-20'),(18,'James Lopez',499.9,NULL,'pending','2024-05-16','2024-05-29'),(19,'Bob Johnson',499.90000000000003,NULL,'pending','2024-05-16','2024-05-18'),(20,'Logan Reyes',1499.87,NULL,'pending','2024-05-16','2024-05-17'),(21,'Jacob Miller',9599.88,NULL,'pending','2024-05-16','2024-05-23'),(22,'Roshan Sutihar',100,'Credit Card','pending','2024-05-16','2024-05-21'),(23,'William Hernandez',9599.88,'cash','pending','2024-05-16','2024-05-30'),(24,'William Hernandez',8999.9,'cash','pending','2024-05-17','2024-05-23'),(25,'Sophia Brown',9039.88,'cash','pending','2024-05-20','2024-05-24');
+INSERT INTO `orders` VALUES (4,'Frank',100,'cash','pending','2024-05-10','2024-05-10','store'),(5,'Ram',100,'cash','pending','2024-05-10','2024-05-10','store'),(6,'harry',100,'cash','pending','2024-05-10','2024-05-10','store'),(8,'gita',100,'cash','complete','2024-05-10','2024-05-10','store'),(9,'Gita',100,'cash','delivered','2024-05-10','2024-05-10','store'),(10,'Gita',100,'cash','complete','2024-05-10','2024-05-10','store'),(11,'Gita',100,'cash','pending','2024-05-10','2024-05-10','store'),(12,'Alice Smith',93.6,'cash','delivered','2024-05-12','2024-05-23','store'),(14,'Roshan Sutihar',100,'cash','complete','2024-05-15','2024-05-20','store'),(15,'John Doe',1677.98,'paypal','pending','2024-05-15','2024-05-28','store'),(16,'John Doe',78,'cash','pending','2024-05-16','2024-05-17','store'),(17,'Roshan Sutihar',100,'Credit Card','pending','2024-05-16','2024-05-20','ecommerce'),(18,'James Lopez',499.9,'cash','pending','2024-05-16','2024-05-29','store'),(19,'Bob Johnson',499.90000000000003,'Credit Card','pending','2024-05-16','2024-05-18','ecommerce'),(20,'Logan Reyes',1499.87,'cash','pending','2024-05-16','2024-05-17','store'),(21,'Jacob Miller',9599.88,'cash','pending','2024-05-16','2024-05-23','store'),(22,'Roshan Sutihar',100,'Credit Card','pending','2024-05-16','2024-05-21','store'),(23,'William Hernandez',9599.88,'cash','pending','2024-05-16','2024-05-30','ecommerce'),(24,'William Hernandez',8999.9,'cash','pending','2024-05-17','2024-05-23','store'),(25,'Sophia Brown',9039.88,'cash','pending','2024-05-20','2024-05-24','store'),(26,'Alice Smith',499.9,'paypal','pending','2024-05-20','2024-05-30','store'),(27,'Gita',130,'cash','pending','2024-05-25','2024-05-31','store');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-20 13:32:40
+-- Dump completed on 2024-05-26 16:29:08

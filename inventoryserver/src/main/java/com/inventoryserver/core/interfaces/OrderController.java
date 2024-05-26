@@ -50,6 +50,27 @@ public class OrderController {
 	    }
 	}
 	
+	
+	@PostMapping("/newEccomerceOrder")
+	
+	public ResponseEntity<String> createEccomerceOrder(@RequestBody Order newOrder) {
+	    // Check if any required fields are missing
+	    if ( newOrder.getCustomerID().isEmpty() || newOrder.getTotalAmount() == 0 || newOrder.getOrderDetails().isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Some fields are missing, please check");
+	    }
+
+	    // Save the new order
+	    String orderId = ordDao.saveEcommerce(newOrder);
+
+	    if (orderId.equals("Error")) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unable to save the order");
+	    } else {
+	        return ResponseEntity.ok().body(orderId);
+	    }
+	}
+	
+	
+	
 	@GetMapping("/totalvalue")
     public int getTotalAmount() {
         return ordDao.getTotalValue();

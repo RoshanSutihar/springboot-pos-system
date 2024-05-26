@@ -9,9 +9,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+
 import com.itextpdf.io.IOException;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
+
 import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -24,6 +26,8 @@ import com.lowagie.text.alignment.HorizontalAlignment;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+
+
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -43,7 +47,7 @@ public class OrderDAO {
 	 
 
 public String save(Order newOrder) {
-    String insertSql = "INSERT INTO orders (order_date, customer_id, ship_date, total_amount, order_status, payment_type) VALUES (?,?, ?, ?, ?,?)";
+    String insertSql = "INSERT INTO orders (order_date, customer_id, ship_date, total_amount, order_status, payment_type, order_origin) VALUES (?,?, ?, ?, ?,?,?)";
     String insertDetailSql = "INSERT INTO orderdetails (order_id, product_name, product_qty, product_unitprice, product_total) VALUES (?, ?, ?, ?, ?)";
     String updateProductSql = "UPDATE products SET product_qty = product_qty - ? WHERE product_name = ?";
     
@@ -52,7 +56,7 @@ public String save(Order newOrder) {
         jdbcTemplate.execute("START TRANSACTION");
 
         // Insert the order
-        jdbcTemplate.update(insertSql, formattedDateTime, newOrder.getCustomerID(), newOrder.getShipDate(), newOrder.getTotalAmount(), newOrder.getOrderStatus(), newOrder.getPaymentType());
+        jdbcTemplate.update(insertSql, formattedDateTime, newOrder.getCustomerID(), newOrder.getShipDate(), newOrder.getTotalAmount(), newOrder.getOrderStatus(), newOrder.getPaymentType(), newOrder.getOrigin());
 
         // Get the ID of the inserted order
         int orderId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -74,7 +78,13 @@ public String save(Order newOrder) {
         return "Error";
     }
 }
-	 
+
+public String saveEcommerce(Order newEcommerce) {
+	
+	return "sucess";
+}
+
+
 	 
 	 public int getTotalValue()
 	 {
@@ -181,6 +191,7 @@ public String save(Order newOrder) {
 	            Paragraph invoiceDateParagraph = new Paragraph("Invoice Date: " + formattedDateTime);
 	            invoiceDateParagraph.setAlignment(Element.ALIGN_RIGHT);
 	        
+	            
 	            
 	            Paragraph orderdetails = new Paragraph("Order Details", font4);
 	            orderdetails.setAlignment(Element.ALIGN_CENTER);

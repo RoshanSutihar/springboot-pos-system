@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card-Based eCommerce</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">eCommerce Store</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <button class="btn btn-outline-primary" onclick="goToCart()">Cart</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-5">eCommerce Store</h1>
+    <div class="row" id="product-list">
+        <!-- Product cards go here -->
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    // Fetch products from the server
+    $(document).ready(function() {
+        $.ajax({
+            url: 'http://localhost:8085/products/getproducts',
+            method: 'GET',
+            success: function(response) {
+                // Call a function to render products after receiving the response
+                renderProducts(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching products:', error);
+            }
+        });
+    });
+
+    // Render products dynamically
+    function renderProducts(products) {
+        const productList = $('#product-list');
+        productList.empty(); // Clear existing products
+        products.forEach(product => {
+            const productCard = `
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">${product.productName}</h5>
+                            <p class="card-text">${product.productDesc}</p>
+                            <p class="card-text"><strong>$${product.productPrice.toFixed(2)}</strong></p>
+                            <button class="btn btn-primary" onclick="addToCart(${product.productId})">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>`;
+            productList.append(productCard);
+        });
+    }
+
+    // Add product to cart
+    function addToCart(productId, productName, productPrice) {
+        let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+        const cartItem = cart.find(item => item.productId === productId);
+        if (cartItem) {
+            cartItem.quantity++;
+        } else {
+            cart.push({ productId, productName, productPrice, quantity: 1 });
+        }
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        alert("Product added to cart!");
+    }
+
+    // Redirect to checkout page
+    function goToCart() {
+        window.location.href = 'checkout.html';
+    }
+</script>
+</body>
+</html>
