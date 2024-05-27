@@ -75,7 +75,7 @@ public class CustomerController {
 	    }
 	 
 	 @GetMapping("/validateCustomer/{number}")
-	 public String validateCustomer(@PathVariable int number) {
+	 public String validateCustomer(@PathVariable String number) {
 	     return cusDao.validateDetails(number);
 	 }
 	 

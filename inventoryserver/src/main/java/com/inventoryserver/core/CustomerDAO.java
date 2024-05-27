@@ -46,10 +46,10 @@ public class CustomerDAO {
 	 
 	 
 	 
-	 public String validateDetails(int number) {
-		 String sql = "SELECT cus_name FROM customers WHERE cus_phone = ?";
+	 public String validateDetails(String number) {
+		 String sql = "SELECT cus_name FROM cutomers WHERE cus_phone = ?";
 	        try {
-	            return jdbcTemplate.queryForObject(sql,  String.class);
+	            return jdbcTemplate.queryForObject(sql,new Object[]{number},  String.class);
 	        } catch (Exception ex) {
 	            return "Error";
 	        }

@@ -36,7 +36,8 @@ public class OrderController {
 	@PostMapping("/neworder")
 	public ResponseEntity<String> createOrder(@RequestBody Order newOrder) {
 	    // Check if any required fields are missing
-	    if ( newOrder.getCustomerID().isEmpty() || newOrder.getTotalAmount() == 0 || newOrder.getOrderDetails().isEmpty()) {
+	    if (newOrder.getPaymentType().isEmpty() ||newOrder.getCustomerID().isEmpty() || newOrder.getTotalAmount() == 0 || 
+	    		newOrder.getOrderDetails().isEmpty() || newOrder.getOrderStatus().isEmpty() ||newOrder.getOrigin().isEmpty()) {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Some fields are missing, please check");
 	    }
 
