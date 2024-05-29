@@ -12,11 +12,11 @@
   <link rel="stylesheet" href="style.css">
   <style>
     .card-title {
-      font-size: 1.2rem; /* smaller font size for card title */
+      font-size: 1.2rem; 
     }
     .card-value {
-      font-size: 2rem; /* larger font size for card value */
-      font-weight: bold; /* bold font weight for card value */
+      font-size: 2rem;
+      font-weight: bold; 
     }
 
     footer {
@@ -107,7 +107,7 @@
 
 
       <div class="container" style="margin-top: 15%;">
-        <div class="row justify-content-center align-items-center"> <!-- Center horizontally and vertically -->
+        <div class="row justify-content-center align-items-center"> 
           <div class="col-md-3">
             <div class="card text-center bg-info text-white">
               <div class="card-body">
@@ -144,11 +144,7 @@
       </div>
 
 
-      <footer class="text-center mt-4 py-2" style="background-color: #e3f2fd;">
-        <div class="container">
-            <p>&copy; 2024 Inventory Management Software. All rights reserved.</p>
-        </div>
-    </footer>
+  
       
       <script>
       $(document).ready(function(){
@@ -202,36 +198,35 @@
       });
       </script>
       <script>
-        // Function to check if the user is logged in
+      
         function checkLoggedIn() {
-            // Retrieve username from session storage
+            
             var username = sessionStorage.getItem('username');
-            // If username is not found, redirect to login page
+           
             if (!username) {
                 window.location.href = 'index.html';
             }
         }
     
-        // Call the function to check if the user is logged in
         checkLoggedIn();
     
-        // Retrieve username from session storage
+       
         var username = sessionStorage.getItem('username');
     
-        // Display welcome message
+        
         var holder = document.getElementById('usernamePlaceholder');
         if (username) {
             holder.textContent = username;
         } else {
-            // If username is not found in session storage, redirect to login page
+            
             window.location.href = 'index.html';
         }
     
-        // Add event listener for logout link
+     
         document.getElementById('logoutLink').addEventListener('click', function() {
-            // Clear session storage
+           
             sessionStorage.removeItem('username');
-            // Redirect to login page
+            
             window.location.href = 'index.html';
         });
     </script>

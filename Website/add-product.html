@@ -145,7 +145,7 @@
         function fetchSuppliers() {
             $.get('http://localhost:8085/suppliers/getalldetails', function(data) {
                 data.forEach(function(supplier) {
-                    $('#supplierSelect').append(new Option(supplier.supplierName, supplier.supplierId));
+                    $('#supplierSelect').append(new Option(supplier.supplierName, supplier.supplierName));
                 });
             });
         }

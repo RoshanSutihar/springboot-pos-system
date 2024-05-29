@@ -21,6 +21,7 @@ public class ProductRowMapper implements RowMapper<Product>{
 		  u.setProductPrice(row.getDouble("product_price"));
 		  
 		  
+		  
 		  return u;
 	
 	  }

@@ -247,14 +247,14 @@ public String saveEcommerce(Order newEcommerce) {
 	            for (OrderDetail detail : orderDetails) {
 	                table.addCell(createCell(detail.getProductId()));
 	                table.addCell(createCell(String.valueOf(detail.getProductQty())));
-	                table.addCell(createCell(String.valueOf(detail.getUnitPrice())));
-	                table.addCell(createCell("$"+String.valueOf(detail.getProductTotal())));
+	                table.addCell(createCell(String.format("%.2f", detail.getUnitPrice())));
+	                table.addCell(createCell("$"+String.format("%.2f",detail.getProductTotal())));
 	            }
 
 	            table.addCell(createCell("  "));
                 table.addCell(createCell("  "));
                 table.addCell(createBoldCell( "Total Amount "));
-                table.addCell(createBoldCell("$"+String.valueOf(order.getTotalAmount())));
+                table.addCell(createBoldCell("$"+String.format("%.2f",order.getTotalAmount())));
 	            // Add the table to the document
 	            document.add(table);
 	            // Add order details
@@ -288,6 +288,158 @@ public String saveEcommerce(Order newEcommerce) {
 	        }
 	        return new ByteArrayInputStream(out.toByteArray());
 	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    public ByteArrayInputStream createonlinePDF(int orderId, String userid) {
+	        // Retrieve order details using getOrderById method
+	        Order order = getOrderById(orderId);
+	        if (order == null) {
+	            System.out.println("Order not found.");
+	            return null;
+	        }
+	        	ByteArrayOutputStream out = new ByteArrayOutputStream();
+	        	
+	        // Path to save the PDF invoice
+	        
+
+	        try {
+	            Document document = new Document();
+	            PdfWriter.getInstance(document, out);
+	            document.open();
+
+	            // Add order details to the PDF
+	            Font font = FontFactory.getFont(FontFactory.HELVETICA, 23, Font.BOLD);
+	            Font font2 = FontFactory.getFont(FontFactory.HELVETICA, 19);
+	            Font font3 = FontFactory.getFont(FontFactory.HELVETICA, 14);
+	            Font font4 = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLD);
+	            
+	            
+	            Paragraph invoiceParagraph = new Paragraph("Invoice", font2);
+	            invoiceParagraph.setAlignment(Element.ALIGN_CENTER);
+
+	            Paragraph head = new Paragraph("Inventory Management System", font);
+	            head.setAlignment(Element.ALIGN_CENTER);
+	            
+	            Paragraph tail = new Paragraph("711 E Boldt Way, Appleton, WI, 54911", font3);
+	            tail.setAlignment(Element.ALIGN_CENTER);
+	            
+	            Paragraph footer = new Paragraph("920-832-6666 info@ims.com", font3);
+	            footer.setAlignment(Element.ALIGN_CENTER);
+	            
+	            
+	            Paragraph invoiceDateParagraph = new Paragraph("Invoice Date: " + formattedDateTime);
+	            invoiceDateParagraph.setAlignment(Element.ALIGN_RIGHT);
+	        
+	            
+	            
+	            Paragraph orderdetails = new Paragraph("Order Details", font4);
+	            orderdetails.setAlignment(Element.ALIGN_CENTER);
+	            
+	            
+	            document.add(invoiceParagraph);
+	            document.add(head);
+	            document.add(tail);
+	            document.add(footer);
+	            
+	            document.add(new Paragraph("	     	      	      "));
+	            document.add(invoiceDateParagraph);
+	            document.add(new Paragraph("	     	      	      "));
+	            
+	            
+	            
+	            
+	            document.add(new Paragraph("Invoice Number: " + order.getOrderID()));
+	            document.add(new Paragraph("Customer Name: " + order.getCustomerID()));
+	            document.add(new Paragraph("Order Date: " + order.getOrderDate()));
+	            document.add(new Paragraph("Shipment Date: " + order.getShipDate()));
+	            
+	           
+
+	            // Create paragraph for Invoice Date
+	           	            
+	            
+	            Paragraph userpara = new Paragraph("No Signature Required");
+	            userpara.setAlignment(Element.ALIGN_RIGHT);
+	            
+	            
+	            Paragraph signature = new Paragraph("-------------------");
+	            signature.setAlignment(Element.ALIGN_RIGHT);
+	            // Add the paragraphs to your document
+	           
+	            
+	           
+	            document.add(orderdetails);
+	            
+	            Table table = new Table(4);
+	            table.setWidth(100);;
+
+	            // Add header cells
+	            table.addCell(createHeaderCell("Product Name"));
+	            table.addCell(createHeaderCell("Quantity"));
+	            table.addCell(createHeaderCell("Unit Price"));
+	            table.addCell(createHeaderCell("Total"));
+
+	            
+	            
+	            // Add order details to the table
+	            List<OrderDetail> orderDetails = order.getOrderDetails();
+	            for (OrderDetail detail : orderDetails) {
+	                table.addCell(createCell(detail.getProductId()));
+	                table.addCell(createCell(String.valueOf(detail.getProductQty())));
+	                table.addCell(createCell(String.format("%.2f", detail.getUnitPrice())));
+	                table.addCell(createCell("$"+String.format("%.2f",detail.getProductTotal())));
+	            }
+
+	            table.addCell(createCell("  "));
+                table.addCell(createCell("  "));
+                table.addCell(createBoldCell( "Total Amount "));
+                table.addCell(createBoldCell("$"+String.format("%.2f",order.getTotalAmount())));
+	            // Add the table to the document
+	            document.add(table);
+	            // Add order details
+	            document.add(new Paragraph("	     	      	      "));
+	            document.add(new Paragraph("	     	      	      "));
+	            document.add(new Paragraph("Payment Method: "+ order.getPaymentType()));
+	           
+	            
+	            // display the dashed line for signature
+	            document.add(signature);
+	            //display the username 
+	            document.add(userpara);
+	            
+	            document.add(new Paragraph("	     	      	      "));
+	            
+	            document.add(new Paragraph("=========================================================================="));
+	            
+	            Paragraph toc = new Paragraph("Terns & Conditions", font4);
+	            toc.setAlignment(Element.ALIGN_CENTER);
+	            
+	           
+	            document.add(toc);
+	            document.add(new Paragraph("1) This is system generated invoice. final invoice will be included in the shipment."));
+	            document.add(new Paragraph("2) Returns must be presented within 15 days of Invoice Date."));
+	            document.add(new Paragraph("3) Tax is included in all product unit price."));
+	            document.add(new Paragraph("4) E&OE"));
+	            
+	            document.close();
+
+	           
+	        } catch (DocumentException  e) {
+	            e.printStackTrace();
+	        }
+	        return new ByteArrayInputStream(out.toByteArray());
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    
 	    
 	 

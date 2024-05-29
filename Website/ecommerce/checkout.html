@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Checkout</h1>
+
+    <div class="mb-3">
+        <h2>Cart Items</h2>
+        <ul id="cart-items" class="list-group mb-3"></ul>
+        <p><strong>Total:</strong> $<span id="total-price">0.00</span></p>
+    </div>
+
+    <h2>Customer Information</h2>
+    <form id="checkout-form" class="mb-5">
+        <div class="form-group">
+            <label for="customer-name">Name</label>
+            <input type="text" class="form-control" id="customer-name" disabled>
+        </div>
+        <div class="form-group">
+            <label for="customer-address">Address</label>
+            <input type="text" class="form-control" id="customer-address" disabled>
+        </div>
+        <div class="form-group">
+            <label for="customer-phone">Phone Number</label>
+            <input type="tel" class="form-control" id="customer-phone" disabled>
+        </div>
+        <div class="form-group">
+            <label for="customer-email">Email</label>
+            <input type="email" class="form-control" id="customer-email" disabled>
+        </div>
+
+        <h2>Shipment Details</h2>
+        <div class="form-group">
+            <label for="shipment-date">Select Shipment Date</label>
+            <input type="date" class="form-control" id="shipment-date" required>
+        </div>
+
+        <h2>Payment Details</h2>
+        <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input type="text" class="form-control" id="card-number" required>
+        </div>
+        <div class="form-group">
+            <label for="expiry-date">Expiry Date</label>
+            <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY" required>
+        </div>
+        <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" class="form-control" id="cvv" required>
+        </div>
+
+        <button type="button" class="btn btn-success" onclick="completePurchase()">Complete Purchase</button>
+        <button type="button" class="btn btn-secondary" onclick="continueShopping()">Continue Shopping</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Load cart from session storage
+    function loadCart() {
+        const cartItems = document.getElementById('cart-items');
+        const totalPriceElement = document.getElementById('total-price');
+        const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+        cartItems.innerHTML = '';
+        let totalPrice = 0;
+        cart.forEach(item => {
+            totalPrice += item.productPrice * item.quantity;
+            const cartItem = `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${item.productName} (x${item.quantity})
+                    <span>$${(item.productPrice * item.quantity).toFixed(2)}</span>
+                    <button class="btn btn-danger btn-sm" onclick="removeFromCart(${item.productId})">Remove</button>
+                </li>`;
+            cartItems.insertAdjacentHTML('beforeend', cartItem);
+        });
+        totalPriceElement.textContent = totalPrice.toFixed(2);
+    }
+
+    // Remove product from cart
+    function removeFromCart(productId) {
+        let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+        cart = cart.filter(item => item.productId !== productId);
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
+    }
+
+    // Fetch customer info from session storage and API
+    function fetchCustomerInfo() {
+        const customerName = sessionStorage.getItem('customerName');
+        if (customerName) {
+            $.ajax({
+                url: `http://localhost:8085/customers/getCusInfo/${customerName}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.length > 0) {
+                        const customer = data[0];
+                        $('#customer-name').val(customer.customerName);
+                        $('#customer-address').val(customer.customerAdd);
+                        $('#customer-phone').val(customer.customerPhone);
+                        $('#customer-email').val(customer.customerEmail);
+                    }
+                },
+                error: function() {
+                    alert('Failed to retrieve customer information.');
+                }
+            });
+        }
+    }
+
+    // Complete purchase function (placeholder)
+    function completePurchase() {
+        const customerName = $('#customer-name').val();
+        
+      
+        const shipmentDate = $('#shipment-date').val();
+        const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+    
+        if (!customerName || !shipmentDate || cart.length === 0) {
+            alert('Please ensure customer information is filled, a shipment date is selected, and at least one item is in the cart.');
+            return;
+        }
+    
+        let totalAmount = 0;
+    const orderDetails = cart.map(item => {
+        const productTotal = item.productPrice * item.quantity;
+        totalAmount += productTotal;
+        return {
+            productId: item.productName,
+          
+            productQty: item.quantity,
+            unitPrice: item.productPrice,
+            productTotal: productTotal
+        };
+    });
+    
+        const orderData = {
+            customerID: customerName,
+            shipDate: shipmentDate,
+            totalAmount: totalAmount.toFixed(2),
+            orderStatus: 'pending',
+            origin: 'ecommerce',
+            paymentType: 'Credit Card',
+            orderDetails: orderDetails
+            
+        };
+    
+        $.ajax({
+            url: 'http://localhost:8085/orders/neworder',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(orderData),
+            success: function(response) {
+                const orderId = response;
+                const username = sessionStorage.getItem('customerName');
+                window.open('http://localhost:8085/orders/generateOnlinePDF/' + orderId + '/ecommerce', '_blank');
+                sessionStorage.clear();
+                window.location.href = 'index.html'; // Redirect to the main page or any other page after successful purchase
+            },
+            error: function(error) {
+                alert('Failed to submit order');
+            }
+        });
+    }
+    
+
+    // Continue shopping function
+    function continueShopping() {
+        window.location.href = 'ecommerse.html';
+    }
+
+    // Load cart and customer info on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCart();
+        var customerName = sessionStorage.getItem('customerName');
+        if (customerName) {
+            fetchCustomerInfo(customerName);
+        } else {
+            alert('Customer name not found in session storage.');
+        }
+    });
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

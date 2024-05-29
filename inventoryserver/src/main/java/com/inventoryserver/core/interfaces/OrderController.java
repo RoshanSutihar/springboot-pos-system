@@ -96,6 +96,14 @@ public class OrderController {
     }
 	
 	
+	@GetMapping("/generateOnlinePDF/{orderid}/{userid}")
+	public ResponseEntity<InputStreamResource> createonlinePdf(@PathVariable int orderid,@PathVariable String userid) {
+	    ByteArrayInputStream pdf = ordDao.createonlinePDF(orderid, userid);
+	    HttpHeaders httpHeaders = new HttpHeaders(); // Fix syntax error here
+	    httpHeaders.add("Content-Disposition", "inline; filename=invoice.pdf"); // Fix syntax error and add space before "filename"
+	    return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(pdf)); // Fix syntax error and wrap pdf in InputStreamResource
+	}
+	
 	@GetMapping("/generatePDF/{orderid}/{userid}")
 	public ResponseEntity<InputStreamResource> createPdf(@PathVariable int orderid,@PathVariable String userid) {
 	    ByteArrayInputStream pdf = ordDao.createPDF(orderid, userid);

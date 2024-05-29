@@ -103,9 +103,11 @@
             <input type="number" class="form-control" id="orderId" required>
           </div>
           <div class="form-group">
-            <label for="productName">Product Name:</label>
-            <input type="text" class="form-control" id="productName" required>
-          </div>
+            <label for="product-name">Product Name:</label>
+            <select id="product-name" class="form-control">
+                <option value="">Select Product</option>
+            </select>
+        </div>
           <div class="form-group">
             <label for="qtyReturned">Quantity Returned:</label>
             <input type="number" class="form-control" id="qtyReturned" required>
@@ -121,34 +123,57 @@
     
       <script>
         $(document).ready(function() {
+
+          $.get('http://localhost:8085/products/getproducts', function(data) {
+            productsData = data;
+            data.forEach(function(product) {
+                $('#product-name').append(new Option(product.productName, product.productName));
+            });
+        });
+
           $('#addReturnForm').submit(function(event) {
             event.preventDefault();
             submitReturnForm();
           });
         });
-    
+      
         function submitReturnForm() {
+
+          var productName = $('#product-name').val();
+
+          if (!productName) {
+            alert('Please select a product.');
+            return;
+          }
+
           var returnData = {
             orderId: $('#orderId').val(),
-            productId: $('#productName').val(),
+            productId:productName,
             qtyReturned: $('#qtyReturned').val(),
             returnReason: $('#returnReason').val()
           };
-    
+      
           $.ajax({
             url: 'http://localhost:8085/returns/newreturn',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(returnData),
             success: function(response) {
-              alert('Return added successfully!');
+              if (response === 'Success') {
+                alert('Return added successfully!');
+
+                $('#addReturnForm')[0].reset();
+              } else {
+                alert('Error: ' + response);
+              }
             },
             error: function(response) {
-              $('#error').show().text('Error: ' + response.responseText);
+              alert('Error: ' + response.responseText);
             }
           });
         }
       </script>
+      
 
       <script>
         // Function to check if the user is logged in

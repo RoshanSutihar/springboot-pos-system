@@ -197,6 +197,7 @@
 
             var existingProduct = orderDetails.find(product => product.productName === productName);
             if (existingProduct) {
+                
                 existingProduct.productQty = parseInt(existingProduct.productQty) + parseInt(productQty);
                 existingProduct.productTotal = (existingProduct.productQty * existingProduct.unitPrice).toFixed(2);
             } else {
@@ -228,8 +229,8 @@
                     '<tr>' +
                     '<td>' + detail.productName + '</td>' +
                     '<td>' + detail.productQty + '</td>' +
-                    '<td>$' + parseFloat(detail.unitPrice).toFixed(2) + '</td>' +
-                    '<td>$' + parseFloat(detail.productTotal).toFixed(2) + '</td>' +
+                    '<td>$' + parseFloat(Number(detail.unitPrice)).toFixed(2) + '</td>' +
+                    '<td>$' + parseFloat(Number(detail.productTotal)).toFixed(2) + '</td>' +
                     '<td><button type="button" class="btn btn-danger btn-sm delete-item" data-name="' + detail.productName + '">Delete</button></td>' +
                     '</tr>'
                 );
@@ -265,7 +266,7 @@
                 shipDate: shipDate,
                 totalAmount: overallTotal.toFixed(2),
                 orderStatus: 'pending',
-                origin: 'ecommerce',
+                origin: 'store',
                 orderDetails: orderDetails,
                 paymentType: paymentType
             };

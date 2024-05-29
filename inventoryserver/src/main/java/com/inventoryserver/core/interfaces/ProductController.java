@@ -22,6 +22,7 @@ import com.inventoryserver.core.dtos.CategoryDTO;
 @RestController
 @RequestMapping("/products")
 @CrossOrigin(origins = "*")
+
 public class ProductController {
 
 	public ProductDAO proDao;
@@ -126,7 +127,7 @@ public class ProductController {
 	public ResponseEntity<String> updateProduct(@RequestBody  Product newproduct) {
 		
 		if(newproduct.getProductDesc().isBlank()|| newproduct.getProductPrice()==0 || newproduct.getProductId()==0
-				|| newproduct.getSupplierId() .isBlank()) {
+				) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Some fields missing please check");
 			}
 			

@@ -95,6 +95,13 @@ public class CustomerController {
 	     return cusDao.getCustomersdetails(cusid);
 	 }
 	 
+	 
+	 @GetMapping("/getCusInfo/{cusname}")
+	 public List<Customer> getCustomer(@PathVariable String cusname) {
+	     return cusDao.getCustomer(cusname);
+	 }
+	 
+	 
 	 @PostMapping("/delete/{cusid}")
 	 public ResponseEntity<String> deleteCustomer(@PathVariable String cusid) {
 	    

@@ -6,6 +6,13 @@ public class Product {
 	private String productName;
 	private String productDesc;
 	private double productPrice;
+	
+	private int productQty;
+	private String supplierId;
+	private String categoryId;
+	
+	
+
 	public double getProductPrice() {
 		return productPrice;
 	}
@@ -13,9 +20,6 @@ public class Product {
 	public void setProductPrice(double productPrice) {
 		this.productPrice = productPrice;
 	}
-	private int productQty;
-	private String supplierId;
-	private String categoryId;
 	
 	
 	Product(){}

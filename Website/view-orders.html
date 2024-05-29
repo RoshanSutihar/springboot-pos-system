@@ -16,6 +16,12 @@
       font-size: 2rem; /* larger font size for card value */
       font-weight: bold; /* bold font weight for card value */
     }
+    footer {
+      position: relative;
+      bottom: 0;
+      width: 100%;
+      background-color: #e3f2fd;
+  }
     
   </style>
 </head>
@@ -94,9 +100,9 @@
       </nav>
 
       <div class="container mt-5">
-        <h2>Order Details</h2>
+        
         <table class="table table-hover">
-          <thead>
+          <thead class="thead-light">
             <tr>
               <th>Order ID</th>
               <th>Customer</th>
@@ -158,21 +164,21 @@
         }
   
         function markComplete(orderID) {
-          $.post('http://localhost:8085/orders/markcomplete/' + orderID, function(response) {
+          $.post('http://localhost:8085/orders/'+orderID+'/updateStatus/complete' , function(response) {
             alert(response);
             fetchOrders();
           });
         }
   
         function markDelivered(orderID) {
-          $.post('http://localhost:8085/orders/markdelivered/' + orderID, function(response) {
+          $.post('http://localhost:8085/orders/'+orderID+'/updateStatus/delivered', function(response) {
             alert(response);
             fetchOrders();
           });
         }
   
         function printInvoice(orderID, customerID) {
-          window.open(`print-invoice.html?orderID=${orderID}&customerID=${customerID}`, '_blank');
+          window.open('http://localhost:8085/orders/generatePDF/'+orderID+'/'+username, '_blank');
         }
       </script>
 

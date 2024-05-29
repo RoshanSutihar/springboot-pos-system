@@ -41,12 +41,12 @@ public class ProductDAO {
 	 
 	 
 	 public String update(Product newProduct) {
-	        String sql = "UPDATE products SET product_price = ?, product_desc = ? , product_supp =? WHERE product_id = ?";
+	        String sql = "UPDATE products SET product_price = ?, product_desc = ?  WHERE product_id = ?";
 	        int rowsAffected = jdbcTemplate.update(
 	            sql, 
 	            newProduct.getProductPrice(), 
 	            newProduct.getProductDesc(), 
-	            newProduct.getSupplierId(),
+	            
 	            newProduct.getProductId()
 	        );
 

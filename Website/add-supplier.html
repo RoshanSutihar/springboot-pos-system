@@ -72,13 +72,13 @@
                   </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Returns
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
-                      <a class="dropdown-item" href="add-return.html">Add Return</a>
-                    </div>
-                  </li>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Returns
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
+                <a class="dropdown-item" href="add-return.html">Add Return</a>
+              </div>
+            </li>
                 <li class="nav-item">
                   <a class="nav-link" href="register-user.html">Register User</a>
                 </li>
@@ -134,6 +134,7 @@
                         alert('Supplier added successfully!');
                         // Optionally, clear the form or handle further logic here
                         $('#newSupplierForm').trigger("reset");
+                        window.location.href = 'view-suppliers.html'
                     },
                     error: function(xhr, status, error) {
                         alert('Error adding Supplier: ' + xhr.responseText);
@@ -145,28 +146,28 @@
         
 
 <script>
-    // Function to check if the user is logged in
+ 
     function checkLoggedIn() {
-        // Retrieve username from session storage
+      
         var username = sessionStorage.getItem('username');
-        // If username is not found, redirect to login page
+      
         if (!username) {
             window.location.href = 'index.html';
         }
     }
 
-    // Call the function to check if the user is logged in
+
     checkLoggedIn();
 
-    // Retrieve username from session storage
+  
     var username = sessionStorage.getItem('username');
 
-    // Display welcome message
+    
     var holder = document.getElementById('usernamePlaceholder');
     if (username) {
         holder.textContent = username;
     } else {
-        // If username is not found in session storage, redirect to login page
+       
         window.location.href = 'index.html';
     }
 

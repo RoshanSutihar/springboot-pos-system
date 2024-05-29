@@ -9,14 +9,14 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">eCommerce Store</a>
+    <a class="navbar-brand customer-name" href="#" id="customer-name" style="color: brown; font-weight: bold;">User: </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <button class="btn btn-outline-primary" onclick="goToCart()">Cart</button>
+                <button class="btn btn-outline-primary" onclick="goToCart()">View Cart</button>
             </li>
         </ul>
     </div>
@@ -37,7 +37,7 @@
             url: 'http://localhost:8085/products/getproducts',
             method: 'GET',
             success: function(response) {
-                // Call a function to render products after receiving the response
+                sessionStorage.setItem('products', JSON.stringify(response));
                 renderProducts(response);
             },
             error: function(xhr, status, error) {
@@ -46,7 +46,19 @@
         });
     });
 
-    // Render products dynamically
+    function checkLoggedIn() {
+        var username = sessionStorage.getItem('customerName');
+        if (username) {
+            $('#customer-name').append(username);
+        }
+
+        if (!username) {
+            window.location.href = 'index.html';
+        }
+    }
+
+    checkLoggedIn();
+
     function renderProducts(products) {
         const productList = $('#product-list');
         productList.empty(); // Clear existing products
@@ -54,12 +66,11 @@
             const productCard = `
                 <div class="col-md-4">
                     <div class="card mb-4">
-                        
                         <div class="card-body">
                             <h5 class="card-title">${product.productName}</h5>
                             <p class="card-text">${product.productDesc}</p>
                             <p class="card-text"><strong>$${product.productPrice.toFixed(2)}</strong></p>
-                            <button class="btn btn-primary" onclick="addToCart(${product.productId})">Add to Cart</button>
+                            <button class="btn btn-primary" onclick="addToCart(${product.productId}, '${product.productName}', ${product.productPrice})">Add to Cart</button>
                         </div>
                     </div>
                 </div>`;
@@ -67,7 +78,6 @@
         });
     }
 
-    // Add product to cart
     function addToCart(productId, productName, productPrice) {
         let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
         const cartItem = cart.find(item => item.productId === productId);
@@ -80,7 +90,6 @@
         alert("Product added to cart!");
     }
 
-    // Redirect to checkout page
     function goToCart() {
         window.location.href = 'checkout.html';
     }

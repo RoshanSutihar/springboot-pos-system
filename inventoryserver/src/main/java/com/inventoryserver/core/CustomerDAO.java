@@ -103,6 +103,15 @@ public class CustomerDAO {
 	        return dto;
 	    }
 	 
+	 
+	 
+	 public List<Customer> getCustomer(String name) {
+		    String query = "SELECT * FROM cutomers where cus_name = ?";
+		    List<Customer> customers = jdbcTemplate.query(query,new Object[]{name}, new CustomerRowMapper());
+		    return customers;
+		}
+	 
+	 
 	 public List<Customer> getAllCustomersdetails() {
 		    String query = "SELECT * FROM cutomers";
 		    List<Customer> customers = jdbcTemplate.query(query, new CustomerRowMapper());
