@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS for side-by-side form elements */
+        .form-group {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .card-title {
+      font-size: 1.2rem; /* smaller font size for card title */
+    }
+    .card-value {
+      font-size: 2rem; /* larger font size for card value */
+      font-weight: bold; /* bold font weight for card value */
+    }
+    </style>
+</head>
+<body>
+    
+
+    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+        <form id="order-form">
+            <div class="form-group">
+                <label for="order-id">Order ID:</label>
+                <input type="text" class="form-control" id="order-id" placeholder="Enter Order ID " required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <p id="error-message" style="color: red;"></p>
+        </form>
+            </div>
+        </div>
+
+
+        <div id="order-details" class="mt-5" style="display: none;">
+            <h2>Order Details</h2>
+           
+            <form id="view-order-form">
+                <div class="form-group">
+                    <label for="order-id-disabled">Order ID:</label>
+                    <input type="text" class="form-control" id="order-id-disabled" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="customer-id">Customer Name:</label>
+                    <input type="text" class="form-control" id="customer-id" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="order-date">Order Date:</label>
+                    <input type="text" class="form-control" id="order-date" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ship-date">Ship Date:</label>
+                    <input type="text" class="form-control" id="ship-date" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="total-amount">Total Amount:</label>
+                    <input type="text" class="form-control" id="total-amount" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="total-amount">Order Origin</label>
+                  <input type="text" class="form-control" id="origin" disabled>
+              </div>
+                <div class="form-group">
+                  <label for="total-amount">Order Status</label>
+                  <input type="text" class="form-control" id="status" disabled>
+              </div>
+            </form>
+
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Product Total</th>
+                    </tr>
+                </thead>
+                <tbody id="order-details-table">
+                    <!-- Order details will be dynamically added here -->
+                </tbody>
+            </table>
+            <a href="" id = "printInvoice" class="btn btn-success" target="_blank"> Print Invoice</a>
+            <a href="index.html" id = "" class="btn btn-danger" target="_blank"> Main Page</a>
+        </div>
+      
+    </div>
+
+
+
+    <script>
+
+        $(document).ready(function() {
+    // Handle form submission
+    $('#order-form').submit(function(event) {
+        event.preventDefault();
+        var orderId = $('#order-id').val();
+        var username1 = sessionStorage.getItem('username');
+        // Make AJAX call to fetch order details
+        $.get('http://localhost:8085/orders/viewdetails/' + orderId, function(data) {
+            try {
+                // Parse the text response into JSON format
+                data = JSON.parse(data);
+                // Populate order details form
+                $('#order-id-disabled').val(data.orderID);
+                $('#order-date').val(data.orderDate);
+                $('#customer-id').val(data.customerID);
+                $('#ship-date').val(data.shipDate);
+                $('#origin').val(data.origin);
+                $('#status').val(data.orderStatus);
+                $('#total-amount').val('$' + data.totalAmount.toFixed(2));
+                // Initialize productId variable
+                var productId;
+                // Populate order details table
+                var orderDetailsTable = '';
+                data.orderDetails.forEach(function(detail) {
+                    orderDetailsTable += '<tr>';
+                    orderDetailsTable += '<td>' + detail.productId + '</td>';
+                    orderDetailsTable += '<td>' + detail.productQty + '</td>';
+                    orderDetailsTable += '<td>$' + detail.unitPrice.toFixed(2) + '</td>';
+                    orderDetailsTable += '<td>$' + detail.productTotal.toFixed(2) + '</td>';
+                    orderDetailsTable += '</tr>';
+                    // Assign productId
+                    productId = detail.productId;
+                });
+                // Set href attribute with productId and username1
+                $('#printInvoice').attr('href', 'http://localhost:8085/orders/generatePDF/' + data.orderID + '/' + username1);
+                $('#order-details-table').html(orderDetailsTable);
+                // Show order details section
+                $('#order-details').show();
+                // Hide error message if displayed
+                $('#error-message').hide();
+                $('#order-form').hide();
+            } catch (error) {
+                // Display error message
+                $('#error-message').text('Order details not available.').show();
+                // Hide order details section
+                $('#order-details').hide();
+            }
+        }).fail(function() {
+            // Display error message
+            $('#error-message').text('Failed to fetch order details.').show();
+            // Hide order details section
+            $('#order-details').hide();
+        });
+    });
+});
+
+    </script>
+    
+    <!-- Main fetch system end -->
+
+
+    
+
+    <!-- to make dropdown work -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
