@@ -111,15 +111,15 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="supplierIdInput">Supplier:</label>
-                        <select class="form-control" id="supplierIdInput" name="supplierId">
-                            <!-- Supplier options will be loaded here -->
+                        <select class="form-control" id="supplierIdInput" name="supplierId" disabled>
+                            <!-- Supplier options will be dynamically loaded here -->
                         </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="categoryIdInput">Category:</label>
                         <input class="form-control" id="categoryIdInput" name="categoryId" disabled>
                             <!-- Category options will be loaded here -->
-                        </select>
+                  
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Update Product</button>
@@ -138,20 +138,17 @@
                 // Handle form submission
                 $('#updateProductForm').submit(function(event) {
                     event.preventDefault();
-    
-                    // Get form data
+        
                     const formData = {
-                        productName: $('#productNameInput').val(),
+                        productId: $('#productId').val(),
                         productDesc: $('#productDescInput').val(),
-                        productQty: $('#productQtyInput').val(),
-                        productPrice: $('#productPriceInput').val(),
-                        supplierId: $('#supplierIdInput').val(),
-                        categoryId: $('#categoryIdInput').val()
+                        productPrice: $('#productPriceInput').val()
+                       
                     };
-    
-                    // Submit updated product data
+        
+                    // AJAX call to update the product
                     $.ajax({
-                        url: `http://localhost:8085/products/updateProduct/${productId}`,
+                        url: 'http://localhost:8085/products/updateproduct',
                         type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify(formData),
@@ -164,7 +161,7 @@
                         }
                     });
                 });
-    
+        
                 loadSuppliers();
                 loadCategories();
             });
