@@ -86,11 +86,16 @@
             <h2>Update Product</h2>
             <form id="updateProductForm">
                 <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="productNameInput">Product Name:</label>
-                        <input type="text" class="form-control" id="productNameInput" name="productName">
+                    <div class="form-group col-md-4">
+                        <label for="productNameInput">Product Id:</label>
+                        <input type="text" class="form-control" id="productId" name="productID" disabled>
                     </div>
-                    <div class="form-group col-md-6">
+
+                    <div class="form-group col-md-4">
+                        <label for="productNameInput">Product Name:</label>
+                        <input type="text" class="form-control" id="productNameInput" name="productName" disabled>
+                    </div>
+                    <div class="form-group col-md-4">
                         <label for="productDescInput">Description:</label>
                         <textarea class="form-control" id="productDescInput" name="productDesc"></textarea>
                     </div>
@@ -98,7 +103,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="productQtyInput">Quantity:</label>
-                        <input type="number" class="form-control" id="productQtyInput" name="productQty">
+                        <input type="number" class="form-control" id="productQtyInput" name="productQty" disabled>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="productPriceInput">Price:</label>
@@ -107,14 +112,14 @@
                     <div class="form-group col-md-3">
                         <label for="supplierIdInput">Supplier:</label>
                         <select class="form-control" id="supplierIdInput" name="supplierId">
-                            <!-- Supplier options will be loaded here -->
+                            <!-- Supplier options will be dynamically loaded here -->
                         </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="categoryIdInput">Category:</label>
-                        <select class="form-control" id="categoryIdInput" name="categoryId">
+                        <input class="form-control" id="categoryIdInput" name="categoryId" disabled>
                             <!-- Category options will be loaded here -->
-                        </select>
+                    </inupt>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Update Product</button>
@@ -132,33 +137,34 @@
     
                 // Handle form submission
                 $('#updateProductForm').submit(function(event) {
-                    event.preventDefault();
-    
-                    // Get form data
-                    const formData = {
-                        productName: $('#productNameInput').val(),
-                        productDesc: $('#productDescInput').val(),
-                        productQty: $('#productQtyInput').val(),
-                        productPrice: $('#productPriceInput').val(),
-                        supplierId: $('#supplierIdInput').val(),
-                        categoryId: $('#categoryIdInput').val()
-                    };
-    
-                    // Submit updated product data
-                    $.ajax({
-                        url: `http://localhost:8085/products/updateProduct/${productId}`,
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify(formData),
-                        success: function(response) {
-                            alert('Product updated successfully!');
-                            window.location.href = 'view-products.html'; // Redirect after successful update
-                        },
-                        error: function(xhr) {
-                            alert('Error updating product: ' + xhr.responseText);
-                        }
-                    });
-                });
+    event.preventDefault();
+
+    const formData = {
+        productId: $('#productId').val(),
+        productName: $('#productNameInput').val(),
+        productDesc: $('#productDescInput').val(),
+        productQty: $('#productQtyInput').val(),
+        productPrice: $('#productPriceInput').val(),
+        supplierId: $('#supplierIdInput').val(), // This retrieves the supplier ID
+        categoryId: $('#categoryIdInput').val()
+    };
+
+    // AJAX call to update the product
+    $.ajax({
+        url: `http://localhost:8085/products/updateproduct/`,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(formData),
+        success: function(response) {
+            alert('Product updated successfully!');
+            window.location.href = 'view-products.html'; // Redirect after successful update
+        },
+        error: function(xhr) {
+            alert('Error updating product: ' + xhr.responseText);
+        }
+    });
+});
+
     
                 loadSuppliers();
                 loadCategories();
@@ -169,13 +175,17 @@
                     url: `http://localhost:8085/products/getProduct/${productId}`,
                     type: 'GET',
                     dataType: 'json',
-                    success: function(product) {
+                    success: function(data) {
+                        if (Array.isArray(data) && data.length >0) {
+                            const product = data[0];
+                            $('#productId').val(product.productId);
                         $('#productNameInput').val(product.productName);
                         $('#productDescInput').val(product.productDesc);
                         $('#productQtyInput').val(product.productQty);
                         $('#productPriceInput').val(product.productPrice);
                         $('#supplierIdInput').val(product.supplierId);
                         $('#categoryIdInput').val(product.categoryId);
+                        }
                     },
                     error: function() {
                         alert('Failed to retrieve product details.');
@@ -184,18 +194,22 @@
             }
     
             function loadSuppliers() {
-                // Load suppliers from the server and populate the select dropdown
-                $.ajax({
-                    url: 'http://localhost:8085/suppliers/getalldetails',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(suppliers) {
-                        suppliers.forEach(function(supplier) {
-                            $('#supplierIdInput').append(new Option(supplier.supplierName, supplier.supplierId));
-                        });
-                    }
-                });
-            }
+    $.ajax({
+        url: 'http://localhost:8085/suppliers/getalldetails',
+        type: 'GET',
+        dataType: 'json',
+        success: function(suppliers) {
+            var supplierOptions = suppliers.map(supplier =>
+                `<option value="${supplier.supplierId}">${supplier.supplierName}</option>`
+            ).join('');
+            $('#supplierIdInput').html(supplierOptions);
+        },
+        error: function() {
+            alert('Failed to load suppliers.');
+        }
+    });
+}
+
     
             function loadCategories() {
                 // Load categories from the server and populate the select dropdown
