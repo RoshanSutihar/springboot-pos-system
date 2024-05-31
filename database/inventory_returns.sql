@@ -30,7 +30,7 @@ CREATE TABLE `returns` (
   `return_reason` varchar(120) DEFAULT NULL,
   `return_date` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`return_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `returns` (
 
 LOCK TABLES `returns` WRITE;
 /*!40000 ALTER TABLE `returns` DISABLE KEYS */;
-INSERT INTO `returns` VALUES (1,9,'Product t',5,'Defective item','2024-05-12');
+INSERT INTO `returns` VALUES (1,9,'Product t',5,'Defective item','2024-05-12'),(2,31,'Product ABC',1,'random','2024-05-29');
 /*!40000 ALTER TABLE `returns` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-26 16:29:08
+-- Dump completed on 2024-05-31 12:00:18

@@ -31,7 +31,7 @@ CREATE TABLE `products` (
   `product_supp` varchar(40) DEFAULT NULL,
   `product_price` double DEFAULT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Product ABC','Description of Product ABC',86,'books','3',7.8),(2,'Smartphone X','High-performance smartphone with advanced features',125,'electronics','1',799.99),(3,'Bluetooth Speaker','Portable speaker with wireless connectivity',9,'electronics','3',49.99),(4,'Smart Watch','Fitness tracker and smartwatch hybrid',6,'electronics','4',199.99),(5,'LED TV','High-definition LED television',40,'electronics','5',899.99),(6,'Digital Camera','Professional-grade digital camera with lenses',45,'electronics','8',1499.99),(7,'Plato','Article',76,'books','9',59.99),(8,'Geoscience','Uni Book',15,'books','7',79.99);
+INSERT INTO `products` VALUES (1,'Product ABC','Description of Product ABC',72,'books','Dummy Supplier',19),(2,'Smartphone X','High-performance smartphone with advanced features',119,'electronics','Dummy Supplier',21),(3,'Bluetooth Speaker','Portable speaker with wireless connectivity',80,'electronics','Dummy Supplier',50),(4,'Smart Watch','Fitness tracker and smartwatch hybrid',30,'electronics','Dummy Supplier',200),(5,'LED TV','High-definition LED television',37,'electronics','Dummy Supplier',900),(6,'Digital Camera','Professional-grade digital camera with lenses',43,'electronics','ABC Supplier',15),(7,'Plato','Article',76,'books','Dummy Supplier',60),(8,'Geoscience','Uni Book',13,'books','Dummy Supplier',49),(9,'Wireless Headphones','Premium wireless headphones with active noise cancellation',99,'electronics','Dummy Supplier',249),(10,'Aquafina bottle','1l mineral water',54,'kitchen','XYZ Traders',20),(11,'Dell Laptop','510 GB',34,'electronics','VWX Enterprises',4999),(12,'Table','45X20 Inch table for computers',42,'furniture','VWX Enterprises',39),(13,'Cooking Pot Set','10-piece non-stick cooking pot set',50,'kitchen','DEF Wholesalers',80),(14,'Leather Sofa','Luxury leather sofa with reclining feature',30,'furniture','LMN Enterprises',1200),(15,'Organic Apples','Fresh organic apples from local farms',200,'foods','PQR Imports',3),(16,'Office Chair','Ergonomic office chair with lumbar support',75,'furniture','UVW Exports',150),(17,'Mechanical Keyboard','Backlit mechanical keyboard with customizable keys',120,'electronics','MNO Manufacturers',100),(18,'Ceramic Dinnerware Set','20-piece ceramic dinnerware set for 4',40,'kitchen','STU Wholesalers',60),(19,'Textbooks','Comprehensive textbooks for university students',150,'books','Lawrence University',85),(20,'Inkjet Printer','High-speed inkjet printer with wireless connectivity',60,'electronics','XY print service',200),(21,'Sticky Notes','Pack of 12 colorful sticky notes',500,'stationary','Badgers enterprise',10);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-26 16:29:08
+-- Dump completed on 2024-05-31 12:00:18

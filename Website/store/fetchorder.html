@@ -208,7 +208,7 @@
                     productId = detail.productId;
                 });
                 // Set href attribute with productId and username1
-                $('#printInvoice').attr('href', 'http://localhost:8085/orders/generatePDF/' + data.orderID + '/' + username1);
+                $('#printInvoice').attr('href', 'http://localhost:8085/orders/generateOnlinePDF/' + data.orderID + '/' + username1);
                 $('#order-details-table').html(orderDetailsTable);
                 // Show order details section
                 $('#order-details').show();

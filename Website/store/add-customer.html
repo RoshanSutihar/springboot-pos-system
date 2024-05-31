@@ -117,12 +117,6 @@
         </div>
     
 
-        <footer class="text-center mt-4 py-2" style="background-color: #e3f2fd;">
-          <div class="container">
-              <p>&copy; 2024 Inventory Management Software. All rights reserved.</p>
-          </div>
-      </footer>
-
         <script>
             function addCustomer() {
                 var data = {
@@ -152,36 +146,34 @@
         
 
 <script>
-    // Function to check if the user is logged in
+    
     function checkLoggedIn() {
-        // Retrieve username from session storage
+        
         var username = sessionStorage.getItem('username');
-        // If username is not found, redirect to login page
+        
         if (!username) {
             window.location.href = 'index.html';
         }
     }
 
-    // Call the function to check if the user is logged in
     checkLoggedIn();
 
-    // Retrieve username from session storage
     var username = sessionStorage.getItem('username');
 
-    // Display welcome message
+   
     var holder = document.getElementById('usernamePlaceholder');
     if (username) {
         holder.textContent = username;
     } else {
-        // If username is not found in session storage, redirect to login page
+        
         window.location.href = 'index.html';
     }
 
-    // Add event listener for logout link
+    
     document.getElementById('logoutLink').addEventListener('click', function() {
-        // Clear session storage
+       
         sessionStorage.removeItem('username');
-        // Redirect to login page
+       
         window.location.href = 'index.html';
     });
 </script>

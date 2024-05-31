@@ -29,7 +29,7 @@ CREATE TABLE `suppliers` (
   `supplier_add` varchar(70) DEFAULT NULL,
   `supplier_email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`supplier_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `suppliers` (
 
 LOCK TABLES `suppliers` WRITE;
 /*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-INSERT INTO `suppliers` VALUES (1,'ABC Suppliers','John Smith','456 Oak St appleton','john.smith3@abcsuppliers.com'),(2,'ABC Suppliers2','9208154798','456 Oak St','john.smith@abcsuppliers.com'),(3,'ABC Suppliers3','98218917t2','456 Oak St','john.smith@abcsuppliers.com'),(5,'DEF Wholesalers','92081545798','789 Maple St','sales@defwholesalers.com'),(6,'LMN Enterprises','92081545798','101 Pine St','info@lmnenterprises.com'),(7,'PQR Imports','92081545798','202 Oak St','sales@pqrimports.com'),(8,'UVW Exports','92081545798','303 Cedar St','info@uvwexports.com'),(9,'MNO Manufacturers','92081545798','404 Birch St','sales@mnomanufacturers.com'),(10,'STU Wholesalers','92081545798','606 Pine St','sales@stuwholesalers.com'),(11,'VWX Enterprises','92081545798','707 Cedar St','info@vwxenterprises.com');
+INSERT INTO `suppliers` VALUES (1,'ABC Suppliers','John Smith','456 Oak St appleton','john.smith3@abcsuppliers.com'),(2,'ABC Suppliers2','9208154798','456 Oak St','john.smith@abcsuppliers.com'),(3,'ABC Suppliers3','98218917t2','456 Oak St','john.smith@abcsuppliers.com'),(5,'DEF Wholesalers','92081545798','789 Maple St','sales1@defwholesalers.com'),(6,'LMN Enterprises','92081545798','101 Pine St','info@lmnenterprises.com'),(7,'PQR Imports','92081545798','202 Oak St','sales@pqrimports.com'),(8,'UVW Exports','92081545798','303 Cedar St','info@uvwexports.com'),(9,'MNO Manufacturers','92081545798','404 Birch St','sales@mnomanufacturers.com'),(10,'STU Wholesalers','92081545798','606 Pine St','sales@stuwholesalers.com'),(11,'VWX Enterprises','92081545798','707 Cedar St appleton','info@vwxenterprises.com'),(12,'Lawrence University','9208456432','711 e bold way','info@lawrence.edu'),(13,'XY print service','9864666396','200 w south ave','temp@email.com'),(14,'Badgers enterprise','98264755163','101 E Bound St','test2@ymil.com');
 /*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-26 16:29:09
+-- Dump completed on 2024-05-31 12:00:18
