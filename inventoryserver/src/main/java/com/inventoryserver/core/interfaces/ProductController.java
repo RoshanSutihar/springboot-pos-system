@@ -103,6 +103,27 @@ public class ProductController {
         return proDao.getTotalproductCount();
     }
 	
+	
+	
+	
+	@PostMapping("/delete/{cusid}")
+	 public ResponseEntity<String> deleteCustomer(@PathVariable String cusid) {
+	    
+	     if (cusid == null || cusid.isEmpty()) {
+	         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cusid is missing. Please provide a valid customer ID.");
+	     }
+	     
+	    
+	     boolean deleted = proDao.deleteCustomer(cusid);
+	     
+	    
+	     if (deleted) {
+	         return ResponseEntity.ok().body("Productwith ID " + cusid + " deleted successfully.");
+	     } else {
+	         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product with ID " + cusid + " not found.");
+	     }
+	 }
+	
 	@PostMapping("/{proid}/restock/{qty}")
     public ResponseEntity<String> restockItem(@PathVariable("proid") int productId, @PathVariable("qty") int quantity) {
         if (productId == 0 || quantity <= 0) {

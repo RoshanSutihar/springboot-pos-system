@@ -81,6 +81,17 @@ public class ProductDAO {
 	 }
 	 
 	 
+	 
+	 public boolean deleteCustomer(String customerId) {
+		    String sql = "DELETE FROM products WHERE product_id = ?";
+		    int rowsAffected = jdbcTemplate.update(sql, customerId);
+		    return rowsAffected > 0;
+		}
+	 
+	 
+	 
+	 
+	 
 	 public int getTotalproductCount()
 	 {
 		 String sql = "SELECT SUM(product_qty) AS total_quantity FROM products";
